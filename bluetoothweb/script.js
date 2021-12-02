@@ -22,15 +22,19 @@ function setup() {
   pingButton.mousePressed(pingButtonPressed);
 }
 
-function draw() {
-  background(0);
-}
+
+const WIDTH = 1000;
+const PRESSUREHEIGHT = 400;
+const ACCHEIGHT = 200;
+const MAXVALUES = 40;
+const BASELINE = 460;
+const MAXPRESSURE = 1023;
 
 async function connectButtonPressed() {
   try {
     console.log("Requesting Bluetooth Device...");
     uBitDevice = await navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: "Adafruit Bluefruit LE"}],
+      filters: [{ namePrefix: "Feather nRF52840 Sense"}],
       optionalServices: [UART_SERVICE_UUID]
     });
 
@@ -40,25 +44,13 @@ async function connectButtonPressed() {
     console.log("Getting Service...");
     const service = await server.getPrimaryService(UART_SERVICE_UUID);
 
-    //console.log("Getting Characteristics...");
-   // const txCharacteristic = await service.getCharacteristic(
-    //  UART_TX_CHARACTERISTIC_UUID
-    //);
-    
-    //txCharacteristic.startNotifications();
-    //console.log("here1!");
-   // txCharacteristic.addEventListener(
-    //  "characteristicvaluechanged",
-    //  onTxCharacteristicValueChanged
-   /// );
-
     rxCharacteristic =  service.getCharacteristic(
       UART_RX_CHARACTERISTIC_UUID
     ).then((characteristic)=>{
         
-        const svg = d3.select("body").append("svg").attr('width',1000).attr("height", 600);
-           
-
+        const pressuresvg = d3.select("body").append("svg").attr("id", "pressure").attr('width',1000).attr("height", PRESSUREHEIGHT);
+        const accelerometersvg = d3.select("body").append("svg").attr("id", "accelerometer").attr('width',1000).attr("height", ACCHEIGHT);
+        var colour = d3.scaleSequential(d3.interpolateViridis).domain([0, MAXPRESSURE-BASELINE]);
         let data = [];
        
         return characteristic.startNotifications()
@@ -69,43 +61,85 @@ async function connectButtonPressed() {
                     const ts = Date.now();
                     const dv = event.target.value;
                     const arr = new Uint8Array(dv.buffer)
-                    const strnum = arr.reduce((acc,item)=>{
-                        return `${acc}${item-48}`;
-                    },"");
+                    var string = new TextDecoder().decode(arr);
+                    const toks = string.split(" ");
+                    const [xa, ya, za, xg, yg, zg, pressure, proximity] = toks;
                     
-                  
-
-                    data.push({ts, value: Number(strnum)});
+                    data.push({ts, pressure: Number(pressure)-BASELINE, proximity:Number(proximity), acceleration:[Number(xa),Number(ya),Number(za)], gyro:[Number(xg), Number(yg), Number(zg)]});
                   
                     
-                    if (data.length > 40){
+                    if (data.length > MAXVALUES){
                         [item, ...data] = data;
                     }
 
-                    console.log(data);
+                    const tsx  = d3.scaleTime().domain(d3.extent(data, d=>d.ts)).range([ 0, WIDTH ]);                    
+                    const acc = d3.scaleLinear().domain([-30, 30]).range([ ACCHEIGHT, 0 ]);
+                    const px = d3.scaleLinear().domain([0, MAXPRESSURE-BASELINE]).range([0, PRESSUREHEIGHT]);
 
-                    const chart = svg.selectAll("rect").data(data, d=>d.value)  
+                    const pressurec = pressuresvg.selectAll("rect").data(data, d=>d.ts)  
+                    const BARWIDTH = (WIDTH/MAXVALUES) - 1;
+
+                    const renderPressure = ()=>{
+                      pressurec.enter()  // Returns placeholders for our missing elements
+                      .append("rect")  // Creates the new rectangles
+                      .attr("x", (d, i)=> tsx(d.ts))
+                      .attr("y", (d, i)=> d.pressure > 0 ?  PRESSUREHEIGHT-px(d.pressure) : px(MAXPRESSURE))//d.pressure <= 0 ? PRESSUREHEIGHT - 1023 : PRESSUREHEIGHT - (d.pressure))
+                      .attr("rx",4)
+                      .attr("ry",4)
+                      .attr("width", BARWIDTH)
+                      .attr("height", (d)=> d.pressure > 0 ? px(d.pressure) : MAXPRESSURE)
+                      .style("fill", d=> colour(d.pressure))//d.pressure > (MAXPRESSURE-BASELINE-200) ? d.pressure > (MAXPRESSURE-BASELINE-100) ? "red"  : "orange": "steelblue")
+                      .style("opacity", d=> d.pressure <= 0 ? 0.1 : 1)
+
+                       pressurec.attr("x", (d, i)=> tsx(d.ts))
+                       pressurec.exit().remove()
+                    }
                     
-                    chart.enter()  // Returns placeholders for our missing elements
-                    .append("rect")  // Creates the new rectangles
-                    .attr("x", (d, i)=> i * 21)
-                    .attr("y", (d, i)=> d.value <= 0 ? 600 - 1023/3 : 600 - (d.value/3))
-                    .attr("rx",4)
-                    .attr("ry",4)
-                    .attr("width", 20)
-                    .attr("height", (d)=> d.value > 0 ? d.value/3 : 1023/3)
-                    .style("fill", d=> d.value > 0 ? "orange": "steelblue")
-                    .style("opacity", d=> d.value <= 0 ? 0.1 : 1)
-
-                    chart.attr("x", (d, i)=> i * 21)
-                    //transition()
-                    //.duration(100) // Creates the new rectangles
                     
-                    
-
-                    chart.exit().remove()
-
+                    const renderAccelerometer = ()=>{
+                      const linefn =  d3.line().curve(d3.curveBasis).x(d=>tsx(d.ts)).y(d=>acc(d.value));
                    
+                    
+                      const xdata = [data.map(d=>({value:d.acceleration[0], ts:d.ts}))];
+                      const ydata = [data.map(d=>({value:d.acceleration[1], ts:d.ts}))];
+                      const zdata = [data.map(d=>({value:d.acceleration[2], ts:d.ts}))];
+                      
+                      const accelXchart = accelerometersvg.selectAll("path#x").data(xdata)
+                    
+                      accelXchart.enter().append("path")
+                        .attr("d", d=>linefn(d))
+                        .attr("id", "x")
+                        .attr("fill", "none")
+                        .attr("stroke", "steelblue")
+                        .attr("stroke-width", 1.5);
+                      
+                      accelXchart.attr("d",d=>linefn(d))
+                      
+                      const accelYchart = accelerometersvg.selectAll("path#y").data(ydata)
+                     
+                      accelYchart.enter().append("path")
+                        .attr("d", d=>linefn(d))
+                        .attr("id", "y")
+                        .attr("fill", "none")
+                        .attr("stroke", "red")
+                        .attr("stroke-width", 1.5);
+                      
+                      accelYchart.attr("d",d=>linefn(d))
+  
+                      const accelZchart = accelerometersvg.selectAll("path#z").data(zdata)
+                     
+                      accelZchart.enter().append("path")
+                        .attr("d", d=>linefn(d))
+                        .attr("id", "z")
+                        .attr("fill", "none")
+                        .attr("stroke", "green")
+                        .attr("stroke-width", 1.5);
+                      
+                      accelZchart.attr("d",d=>linefn(d))
+                    }
+
+                    renderPressure();               
+                    renderAccelerometer();
             });
         });
 
