@@ -26,14 +26,14 @@ void setup() {
   }
    ble.info();
   
-  //ble.verbose(false); 
+  ble.verbose(false); 
  
-  while (! ble.isConnected()) {
-      delay(500);
-  }
+  //while (! ble.isConnected()) {
+   //   delay(500);
+  //}
  
-  Serial.println(F("connected!"));
-  ble.setMode(BLUEFRUIT_MODE_DATA);
+  //Serial.println(F("connected!"));
+  //ble.setMode(BLUEFRUIT_MODE_DATA);
 }
 
 void loop() {
@@ -42,7 +42,7 @@ void loop() {
    
    
   //if (sensorValue > 0){
-    ble.print(sensorValue);
+    //ble.print(sensorValue);
     Serial.println(sensorValue);
     delay(200);
   //}
