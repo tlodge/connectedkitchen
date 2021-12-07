@@ -55,37 +55,40 @@ function Dashboard() {
             </g>
     }
 
-    const renderTechnique =()=>{
-        return <g id="technique">
-            <rect id="techrect" x="182.598" y="0.483" width="172.594" height="102.667" className="techrect"/>
-            <rect x="182.593" y="84.383" width="172.35" height="18.283" className="xback"/>
-            <rect x="331.822" y="0.965" width="23.274" height="83.496" className="yback"/>
-            <path d="M343.858,12.616C342.473,12.616 341.349,13.74 341.349,15.126L341.349,78.973C341.349,80.358 342.473,81.483 343.858,81.483C345.243,81.483 346.368,80.358 346.368,78.973L346.368,15.126C346.368,13.74 345.243,12.616 343.858,12.616Z" className="axisline"/>
-            <path d="M341.631,94.067C341.631,92.682 340.507,91.557 339.122,91.557L189.459,91.557C188.074,91.557 186.949,92.682 186.949,94.067C186.949,95.452 188.074,96.577 189.459,96.577L339.122,96.577C340.507,96.577 341.631,95.452 341.631,94.067Z" className="axisline2"/>
-            <path d="M189.98,93.946L338.045,93.946" className="axisline3"/>
-            <path d="M344.151,78.896L344.151,14.608" className="axisline4"/>
-            <g id="dishmatic">
-                <path id="spongetop" d="M302.811,79.838L230.854,79.838L230.854,66.77C230.854,64.365 232.806,62.414 235.21,62.414L299.339,62.414C301.256,62.414 302.811,63.969 302.811,65.886L302.811,79.838Z" className="spongetop"/>
-                <path id="spongebottom" d="M230.854,79.838L302.811,79.838L302.811,80.886C302.811,83.519 300.674,85.656 298.041,85.656L235.615,85.656C232.987,85.656 230.854,83.523 230.854,80.896L230.854,79.838Z" className="spongebottom"/>
-                <path id="handlebottom" d="M298.269,61.064C298.269,59.781 297.227,58.739 295.944,58.739L239.494,58.739C238.157,58.739 237.071,59.825 237.071,61.163L237.071,62.451L298.269,62.451L298.269,61.064Z" className="handlebottom"/>
-                <path id="handle" d="M354.496,0.514L354.496,5.838C343.936,9.43 309.655,27.714 299.032,46.022C296.864,49.759 297.194,59.133 297.194,59.133L238.268,59.35C240.718,46.628 267.419,38.847 286.622,26.745C298.325,19.37 309.604,9.643 321.217,0.514L354.496,0.514Z" className="handle"/>
-            </g>
-            <g id="yaccsponge">
-                <path id="yaccspongetop" d="M246.87,95.28L231.244,95.28L231.244,90.486C231.244,89.604 231.96,88.888 232.842,88.888L245.596,88.888C246.299,88.888 246.87,89.459 246.87,90.162L246.87,95.28Z" className="yaccspongetop"/>
-                <path id="yaccspongebottom" d="M231.244,95.28L246.87,95.28L246.87,95.689C246.87,96.714 246.038,97.547 245.012,97.547L233.099,97.547C232.075,97.547 231.244,96.716 231.244,95.693L231.244,95.28Z" className="yaccspongebottom"/>
-            </g>
-            <g id="xaccsponge">
-                <path id="xaccspongebottom" d="M339.894,42.653C337.879,42.653 336.243,44.289 336.243,46.304L336.243,50.357C336.243,52.372 337.879,54.007 339.894,54.007C339.894,54.007 348.413,54.007 348.413,54.007C350.428,54.007 352.063,52.372 352.063,50.357C352.063,50.357 352.063,46.304 352.063,46.304C352.063,44.289 350.428,42.653 348.413,42.653C348.413,42.653 339.894,42.653 339.894,42.653Z" className="xaccspongebottom"/>
-                <path id="xaccspongetop" d="M339.894,44.277C338.775,44.277 337.867,45.185 337.867,46.304L337.867,50.357C337.867,51.475 338.775,52.383 339.894,52.383L348.413,52.383C349.531,52.383 350.439,51.475 350.439,50.357L350.439,46.304C350.439,45.185 349.531,44.277 348.413,44.277L339.894,44.277Z" className="xaccspongetop"/>
-            </g>
-            <g id="pressurelines">
-                <path id="pressureline1" d="M228.77,79.263L220.245,71.536L223.859,68.889L228.77,79.263Z"/>
-                <path id="pressureline4" d="M307.209,79.335L315.734,71.608L312.12,68.96L307.209,79.335Z"/>
-                <path id="pressureline2" d="M228.319,72.356L224.335,64.108L227.769,63.224L228.319,72.356Z"/>
-                <path id="pressureline3" d="M305.908,76.391L308.443,69.599L305.664,69.123L305.908,76.391Z"/>
-                <path id="pressureline5" d="M310.081,80.345L314.22,76.286L315.458,78.131L310.081,80.345Z"/>
-            </g>
-        </g>
+    const renderTechnique =(root, data)=>{
+        const g = root.select("g#technique");
+        const tech = g.selectAll("g.techgroup").data(data, (d,i)=>i)
+        const techg = tech.enter().append("g").attr("class", "techgroup");
+
+        techg.append("rect").attr("class","xback").attr("x",182.593).attr("y", 84.383).attr("width", 172.35).attr("height", 18.283)
+        techg.append("rect").attr("class","yback").attr("x",331.822).attr("y", 0.965).attr("width", 23.274).attr("height", 83.496)
+        techg.append("path").attr("d","M343.858,12.616C342.473,12.616 341.349,13.74 341.349,15.126L341.349,78.973C341.349,80.358 342.473,81.483 343.858,81.483C345.243,81.483 346.368,80.358 346.368,78.973L346.368,15.126C346.368,13.74 345.243,12.616 343.858,12.616Z").attr("class", "axisline")
+        techg.append("path").attr("d","M341.631,94.067C341.631,92.682 340.507,91.557 339.122,91.557L189.459,91.557C188.074,91.557 186.949,92.682 186.949,94.067C186.949,95.452 188.074,96.577 189.459,96.577L339.122,96.577C340.507,96.577 341.631,95.452 341.631,94.067Z").attr("class", "axisline2")
+        techg.append("path").attr("d","M189.98,93.946L338.045,93.946").attr("class", "axisline3")
+        techg.append("path").attr("d","M344.151,78.896L344.151,14.608").attr("class", "axisline4")
+
+        const dishmatic = techg.append("g").attr("id","dishmatic")
+        dishmatic.append("path").attr("id","spongetop").attr("d","M302.811,79.838L230.854,79.838L230.854,66.77C230.854,64.365 232.806,62.414 235.21,62.414L299.339,62.414C301.256,62.414 302.811,63.969 302.811,65.886L302.811,79.838Z" ).attr("class", "spongetop")
+        dishmatic.append("path").attr("id","spongebottom").attr("d","M230.854,79.838L302.811,79.838L302.811,80.886C302.811,83.519 300.674,85.656 298.041,85.656L235.615,85.656C232.987,85.656 230.854,83.523 230.854,80.896L230.854,79.838Z" ).attr("class", "spongebottom")
+        dishmatic.append("path").attr("id","handlebottom").attr("d","M298.269,61.064C298.269,59.781 297.227,58.739 295.944,58.739L239.494,58.739C238.157,58.739 237.071,59.825 237.071,61.163L237.071,62.451L298.269,62.451L298.269,61.064Z" ).attr("class", "handlebottom")
+        dishmatic.append("path").attr("id","handle").attr("d","M354.496,0.514L354.496,5.838C343.936,9.43 309.655,27.714 299.032,46.022C296.864,49.759 297.194,59.133 297.194,59.133L238.268,59.35C240.718,46.628 267.419,38.847 286.622,26.745C298.325,19.37 309.604,9.643 321.217,0.514L354.496,0.514Z").attr("class", "handle")
+
+
+        const yaccsponge = techg.append("g").attr("id","yaccsponge")
+        yaccsponge.append("path").attr("id","yaccspongetop").attr("d","M246.87,95.28L231.244,95.28L231.244,90.486C231.244,89.604 231.96,88.888 232.842,88.888L245.596,88.888C246.299,88.888 246.87,89.459 246.87,90.162L246.87,95.28Z"  ).attr("class", "yaccspongetop")
+        yaccsponge.append("path").attr("id","yaccspongebottom").attr("d","M231.244,95.28L246.87,95.28L246.87,95.689C246.87,96.714 246.038,97.547 245.012,97.547L233.099,97.547C232.075,97.547 231.244,96.716 231.244,95.693L231.244,95.28Z").attr("class", "yaccspongebottom")
+
+        const xaccsponge = techg.append("g").attr("id","xaccsponge")
+        xaccsponge.append("path").attr("id","xaccspongebottom").attr("d","M339.894,42.653C337.879,42.653 336.243,44.289 336.243,46.304L336.243,50.357C336.243,52.372 337.879,54.007 339.894,54.007C339.894,54.007 348.413,54.007 348.413,54.007C350.428,54.007 352.063,52.372 352.063,50.357C352.063,50.357 352.063,46.304 352.063,46.304C352.063,44.289 350.428,42.653 348.413,42.653C348.413,42.653 339.894,42.653 339.894,42.653Z").attr("class", "xaccspongebottom")
+        xaccsponge.append("path").attr("id","xaccspongetop").attr("d","M339.894,44.277C338.775,44.277 337.867,45.185 337.867,46.304L337.867,50.357C337.867,51.475 338.775,52.383 339.894,52.383L348.413,52.383C349.531,52.383 350.439,51.475 350.439,50.357L350.439,46.304C350.439,45.185 349.531,44.277 348.413,44.277L339.894,44.277Z").attr("class", "xaccspongetop")
+
+        const pressurelines = techg.append("g").attr("id","pressurelines")
+        pressurelines.append("path").attr("id","pressureline1").attr("d","M228.77,79.263L220.245,71.536L223.859,68.889L228.77,79.263Z").attr("class", "pressureline1")
+        pressurelines.append("path").attr("id","pressureline2").attr("d","M228.319,72.356L224.335,64.108L227.769,63.224L228.319,72.356Z").attr("class", "pressureline2")
+        pressurelines.append("path").attr("id","pressureline3").attr("d","M305.908,76.391L308.443,69.599L305.664,69.123L305.908,76.391Z").attr("class", "pressureline3")
+        pressurelines.append("path").attr("id","pressureline4").attr("d","M307.209,79.335L315.734,71.608L312.12,68.96L307.209,79.335Z").attr("class", "pressureline4")
+        pressurelines.append("path").attr("id","pressureline5").attr("d","M310.081,80.345L314.22,76.286L315.458,78.131L310.081,80.345Z").attr("class", "pressureline5")
+       
     }
 
     const renderNoise = ()=>{
@@ -142,9 +145,9 @@ function Dashboard() {
 
         renderLiquid(root, liquiddata);
         renderWater(root, waterdata);
+        renderTechnique(root, [1]);
         {/*<g>
             {renderTime()}
-            {renderTechnique()}
             {renderNoise()}
             {renderTemperature()}
             {renderText()}
@@ -159,6 +162,9 @@ function Dashboard() {
        </g>
        <g id="water-usage">
         <rect id="waterrect" x="9.832" y="0.392" width="85.83" height="102.757" className="waterrect"/>
+       </g>
+       <g id="technique">
+       <rect id="techrect" x="182.598" y="0.483" width="172.594" height="102.667" className="techrect"/>
        </g>
     </svg>);
 }
