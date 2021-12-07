@@ -8,6 +8,7 @@ import React, { Suspense, useRef, useState, useMemo, useEffect } from "react";
 import * as d3 from 'd3';
 import { useD3 } from './hooks/useD3'
 import './ColorMaterial'
+import Dashboard from './Dashboard'
 
 const UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 const UART_TX_CHARACTERISTIC_UUID = "6e400002-b5a3-f393-e0a9-e50e24dcca9e";
@@ -355,7 +356,7 @@ function App() {
         <Box  rotation={rotation} />
       
     </Canvas>
-   
+    <Dashboard/>
     {/*<svg ref={pressureref} width={`${WIDTH}px`} height={`${PRESSUREHEIGHT}px}`}/>
     <svg ref={accelerometerref} width={`${WIDTH}px`} height={`${ACCHEIGHT}px}`}/>
 <svg ref={micref} width={`${WIDTH}px`} height={`${MICHEIGHT}px}`}/>*/}

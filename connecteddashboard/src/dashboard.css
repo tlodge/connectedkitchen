@@ -1,0 +1,169 @@
+.sensortext{
+    font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;
+}
+
+.main{
+    fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;
+}
+
+.washingrect{
+    fill:#f7f2ef;fill-opacity:0.74;stroke:#000;stroke-width:0.73px;
+}
+
+.bubble {
+    fill:#cfdfd8;stroke:#000;stroke-width:1px;opacity: 0.8;
+}
+
+.bubble2{
+    fill:#f2eee2;stroke:#000;stroke-width:1px;opacity: 0.8;
+}
+
+.bigbubble{
+    fill:#f1ede0;fill-opacity:0.84;stroke:#000;stroke-width:1px;
+}
+
+.bigbubbleline{
+    fill:none;stroke:#170000;stroke-width:1px;
+}
+
+.bubbleline{
+    fill:none;stroke:#000;stroke-width:1px;opacity: 0.8;
+}
+
+.waterrect{
+    fill:#eae5db;fill-opacity:0.74;stroke:#000;stroke-width:0.73px;
+}
+
+.gauge-circle{
+    fill:#f1ede0;fill-opacity:0.84;stroke:#000;stroke-width:1px;
+}
+
+.water{
+    fill:#23439f;
+}
+
+.gauge-pivot{
+   fill:#ef6840;fill-opacity:0.84;stroke:#000;stroke-width:1px;
+}
+
+.timerect{
+    fill:#9eab9f;fill-opacity:0.74;stroke:#000;stroke-width:0.84px;
+}
+
+.arrow{
+    fill:#bab9b5;fill-opacity:0.84;stroke:#000;stroke-width:1px;
+}
+
+.timeback{
+    fill:#89a5a0;
+}
+
+.timer{
+    fill:#ece8d8;stroke:#000;stroke-width:1px;
+}
+
+.timereflection{
+    fill:#808080;fill-opacity:0.35;
+}
+
+.sand{
+    fill:#ddcf90;
+}
+
+.techrect{
+    fill:#fdf4cb;fill-opacity:0.74;stroke:#000;stroke-width:0.96px;
+}
+
+.xback{
+    fill:#ddcf90;stroke:#000102;stroke-width:0.91px;
+}
+
+.yback{
+    fill:#a8bbb8;stroke:#272000;stroke-width:0.9px;
+}
+
+.axisline{
+    fill:#858f8d;fill-opacity:0.55;
+}
+
+.axisline2{
+  fill:#bfab50;fill-opacity:0.57;
+}
+
+.axisline3{
+    fill:none;stroke:#000;stroke-width:0.95px;
+}
+
+.axisline4{
+    fill:none;stroke:#000;stroke-width:1.51px;
+}
+
+.spongetop{
+    fill:#f1ede0;fill-opacity:0.84;stroke:#000;stroke-width:1.03px;
+}
+.spongebottom{
+    fill:#e75368;stroke:#000;stroke-width:0.93px;
+}
+.handlebottom{
+    fill:#f1ede0;stroke:#000;stroke-width:1.01px;
+}
+
+.handle{
+    fill:#ddcf90;stroke:#000;stroke-width:1.03px;
+}
+
+.yaccspongetop{
+    fill:#f1ede0;fill-opacity:0.84;stroke:#000;stroke-width:0.85px;
+}
+
+.yaccspongebottom{
+    fill:#e75368;fill-opacity:0.84;stroke:#000;stroke-width:0.89px;
+}
+
+.xaccspongebottom{
+    fill:#e56a7b;stroke:#000;stroke-width:0.75px;
+}
+
+.xaccspongetop{
+   fill:#f3eede;stroke:#000;stroke-width:0.75px;
+}
+
+.noiserect{
+   fill:#848786;fill-opacity:0.74;stroke:#000;stroke-width:0.84px;
+}
+
+.bullhorn{
+    fill:#e77553;stroke:#000;stroke-width:0.68px;
+}
+
+.bigbull{
+    fill:#bab9b5;stroke:#000;stroke-width:0.99px;
+}
+
+.bigbullinner{
+    fill:#808080;
+}
+
+.temprect{
+    fill:#ea6e3b;fill-opacity:0.74;stroke:#000;stroke-width:0.73px;
+}
+
+.thermometerback{
+    fill:#fef7d9;stroke:#000;stroke-width:1.02px;
+}
+
+.thermometerreflection{
+    fill:#d2c6a4;
+}
+
+.thermometerinner{
+    stroke:#000;stroke-width:1.02px;
+}
+
+.thermometerreading{
+    fill:#e77553;stroke:#000;stroke-width:0.91px;
+}
+
+.backrect{
+   fill:#313f4c;  
+}
