@@ -11,13 +11,12 @@
 }
 
 .bubble {
-    fill:#cfdfd8;stroke:#000;stroke-width:1px;opacity: 0.8;
+    fill:#cfdfd8;stroke:#000;stroke-width:1px;
 }
 
 .bubble2{
-    fill:#f2eee2;stroke:#000;stroke-width:1px;opacity: 0.8;
+    fill:#f2eee2;stroke:#000;stroke-width:1px;
 }
-
 .bigbubble{
     fill:#f1ede0;fill-opacity:0.84;stroke:#000;stroke-width:1px;
 }
@@ -113,11 +112,11 @@
 }
 
 .yaccspongetop{
-    fill:#f1ede0;fill-opacity:0.84;stroke:#000;stroke-width:0.85px;
+    fill:#f1ede0;stroke:#000;stroke-width:0.85px;
 }
 
 .yaccspongebottom{
-    fill:#e75368;fill-opacity:0.84;stroke:#000;stroke-width:0.89px;
+    fill:#e75368;stroke:#000;stroke-width:0.89px;
 }
 
 .xaccspongebottom{
