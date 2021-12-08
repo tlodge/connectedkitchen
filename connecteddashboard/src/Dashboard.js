@@ -20,8 +20,8 @@ function Dashboard() {
                         
                  
 
-        bubbles.transition().duration(1000).attr("opacity",1.0).attr("transform", d=>`translate(${d[0]},${d[1]})`)
-        bubbles.exit().remove();
+        bubbles.transition().duration(1000).attr("transform", d=>`translate(${d[0]},${d[1]})`)
+        bubbles.exit().transition().duration(1000).attr("opacity",0).remove();
     }
 
     const renderWater = (root, data)=>{
@@ -148,7 +148,7 @@ function Dashboard() {
       setSensorData(
         {
             liquiddata: Array.from({length: Math.floor(1+ Math.random()*100)}, () => ([-8 + Math.floor(Math.random() * 70),Math.floor(Math.random()*-64), Math.floor(1+Math.random()*2)])),
-            waterdata:[{flow:Math.floor(Math.random()*20),fill:sensordata.waterdata[0].fill+Math.floor(Math.random()*100), previous:sensordata.waterdata[0].flow}],
+            waterdata:[{flow:Math.floor(Math.random()*20),fill:sensordata.waterdata[0].fill+Math.floor(Math.random()*20), previous:sensordata.waterdata[0].flow}],
             noisedata: Array.from({length: Math.floor(1+ Math.random()*100)}, () => ([-30 + Math.floor(Math.random() * 100), 70 - Math.floor(Math.random()*90)])),
             temperaturedata: [10 + Math.floor(Math.random()*50)],
             techniquedata:[{accx: -30 + Math.random()*60, accy: -30 + Math.random()*60, accz: -30 + Math.random()*60, pressure:Math.floor(Math.random()*1023)}],
@@ -169,6 +169,13 @@ function Dashboard() {
     });
 
     return (
+        <>
+        <div className="fullwidth">
+            <div className="line">
+                    <div className="heading">Connected Kitchen <span className="subheading">dashboard</span></div>
+                    <div className="menu">connect</div>
+            </div>
+        </div>
     <svg ref={sensorref} width="100vw" viewBox="0 0 366 207" className="main">
        <rect x={0} y={0} width="365" height="206" className="backrect"></rect>
        <g id="washing-liquid">
@@ -209,7 +216,13 @@ function Dashboard() {
                 <text x="14.645px" y="8.07px" className="sensortext">water usage</text>
                 <text x="117.449px" y="201.552px" className="sensortext">time</text>
         </g>
-    </svg>);
+    </svg>
+    <div className="fullwidth">
+            <div style={{display:"flex", alignItems:"center", justifyContent:"center", width: "100vw", height:"80px", textAlign:"center"}}>
+                    <div className="message">A message goes here!</div>
+            </div>
+        </div>
+    </>);
 }
 
 export default Dashboard;

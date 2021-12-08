@@ -1,3 +1,41 @@
+.fullwidth{
+    width: calc(100vw - 30px);
+    padding:20px;
+}
+
+.line{
+    display: flex;
+    flex-direction: row;
+    padding-left:25px;
+    flex:1 1 0;
+}
+
+.menu{
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+    justify-content: end;
+    padding-right:20px;
+    color: white;  
+}
+
+.heading{
+    color:white;
+    font-size: 2em;
+    padding:10px;
+}
+
+.message{
+    color:white;
+    font-size: 1.5em;
+    padding:12px;
+}
+
+
+.subheading{
+    color: #ea6e3b;
+}
+
 .sensortext{
     font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;
 }

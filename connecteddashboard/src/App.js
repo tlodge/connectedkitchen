@@ -342,26 +342,28 @@ function App() {
     );
   }
   return (
-    <div className="App">
-      <button onClick={selectDevice}>connect</button>
-
-      <Canvas>
-        {/*<Suspense fallback={null}>
-          <Model />
-  </Suspense>*/}
-      
-        <ambientLight intensity={0.5} />
-        <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
-        <pointLight position={[-10, -10, -10]} />
-        <Box  rotation={rotation} />
-      
-    </Canvas>
-    <Dashboard/>
-    {/*<svg ref={pressureref} width={`${WIDTH}px`} height={`${PRESSUREHEIGHT}px}`}/>
-    <svg ref={accelerometerref} width={`${WIDTH}px`} height={`${ACCHEIGHT}px}`}/>
-<svg ref={micref} width={`${WIDTH}px`} height={`${MICHEIGHT}px}`}/>*/}
-    </div>
+    <div className="App"><Dashboard/></div>
   );
 }
 
 export default App;
+/*
+<div className="App">
+      <button onClick={selectDevice}>connect</button>
+
+      <Canvas>
+        {<Suspense fallback={null}>
+          <Model />
+  </Suspense>}
+      
+  <ambientLight intensity={0.5} />
+  <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
+  <pointLight position={[-10, -10, -10]} />
+  <Box  rotation={rotation} />
+
+</Canvas>
+<Dashboard/>
+{<svg ref={pressureref} width={`${WIDTH}px`} height={`${PRESSUREHEIGHT}px}`}/>
+<svg ref={accelerometerref} width={`${WIDTH}px`} height={`${ACCHEIGHT}px}`}/>
+<svg ref={micref} width={`${WIDTH}px`} height={`${MICHEIGHT}px}`}/>}
+</div>*/
