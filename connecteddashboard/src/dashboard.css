@@ -84,7 +84,7 @@
 }
 
 .timerect{
-    fill:#9eab9f;fill-opacity:0.74;stroke:#000;stroke-width:0.84px;
+    fill:#9eab9f;stroke:#000;stroke-width:0.84px;
 }
 
 .arrow{
@@ -105,6 +105,9 @@
 
 .sand{
     fill:#ddcf90;
+}
+.sandy{
+    fill:#C7B461
 }
 
 .techrect{
