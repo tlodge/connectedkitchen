@@ -1,0 +1,2 @@
+To smooth flow - if in interrupt see a zero don't send?
+can use useffect hook to prevent re-rendering so much?
