@@ -1,5 +1,5 @@
-import "./dashboard.css";
-import { useD3 } from "./hooks/useD3";
+import "../Dashboard/dashboard.css";
+import { useD3 } from "../../hooks/useD3";
 import {useEffect, memo} from 'react';
 
 const Liquid= memo(function Liquid(props) {

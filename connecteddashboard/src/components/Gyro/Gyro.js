@@ -1,10 +1,10 @@
-import './App.css';
+import '../../App.css';
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useRef, useState, memo, useEffect } from "react";
 
 import './ColorMaterial'
 
-function Gyro(props) {
+const Gyro = (props)=>{
 
   const mesh = useRef();
 
