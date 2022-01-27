@@ -42,6 +42,7 @@ function Water(props) {
 
     const waterref = useD3((root)=>{
         const {flow, previous, fill} = props.data;
+        console.log("rendeing flow, previous, fill", flow, previous, fill)
         renderWater(root, [{flow,previous,fill}]);
     });
 

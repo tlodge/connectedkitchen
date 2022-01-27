@@ -1,27 +1,26 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { compose, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import type { AppState, AppThunk } from '../../app/store'
-
+import {loadState,saveState} from './localStorage'
 
 const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 let rxCharacteristic;
 const BASELINE = 260;
 const BASEREADING = 17032;
 const MILLILITRESPERSECOND = 10.8;
+let recordTimer;
 
 export interface SensorState {
-  value: number
-  status: 'idle' | 'loading' | 'failed'
+  recording: boolean,
   data: any
 }
 
 const initialState: SensorState = {
-  value: 0,
-  status: 'idle',
+  recording: undefined,
   data: {
-      "water": {},
-      "sponge": {},
-      "weight": {},
+      "water": [],
+      "sponge": [],
+      "weight": [],
   },
 }
 
@@ -31,14 +30,18 @@ export const sensorSlice = createSlice({
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {    
     setData: (state, action:PayloadAction<any>)=>{
-        state.data = {...state.data, [action.payload.type] : action.payload.data}
+        //append the latest data item to its type
+        state.data = {...state.data, [action.payload.type] : [...state.data[action.payload.type],action.payload.data]}
+ 
+    },
+    setRecording: (state, action:PayloadAction<any>)=>{
+        //append the latest data item to its type
+        state.recording = action.payload;
+ 
     }
   }
 })
-
-export const { setData } = sensorSlice.actions
-export const selectData = (state: AppState) => state.data
-
+export const { setData, setRecording } = sensorSlice.actions;
 
 export const handleFlow = (service): AppThunk => (dispatch, getState) => {
 
@@ -51,33 +54,35 @@ export const handleFlow = (service): AppThunk => (dispatch, getState) => {
       ).then((characteristic)=>{
         return characteristic.startNotifications().then(char => {
           characteristic.addEventListener('characteristicvaluechanged',
-                (event)=>{
-                  const data = event.target.value;
-                  const arr = new Uint8Array(data.buffer);
-                  var string = new TextDecoder().decode(arr);
+            (event)=>{
+                const data = event.target.value;
+                const arr = new Uint8Array(data.buffer);
+                var string = new TextDecoder().decode(arr);
 
-                  const ML = Number(string);
+                const ML = Number(string);
                   
 
-                  if (ML > 0 || previous != 0){
+                if (ML > 0 || previous != 0){
                     const flow = ML * MILLILITRESPERSECOND;
                     fill += (flow / 2); // divide by two as two readings per second/
                 
 
                     dispatch(setData({
                         type:"water",
-                      data:{
-                        ts: Date.now(), 
-                        flow,
-                        fill,
-                        previous
-                      }
+                        data:{
+                            ts: Date.now(), 
+                            flow,
+                            fill,
+                            previous
+                        }
                     }));     
                     previous = flow;
-                  }else{
+                }else{
                     previous = 0;
-                  }
-          })
+                }
+               
+                //saveState()
+            })
         })
       });
     }catch(err){
@@ -87,7 +92,7 @@ export const handleFlow = (service): AppThunk => (dispatch, getState) => {
 
 export const handleWeight = (service): AppThunk => (dispatch, getState) => {
     
-    const THRESHOLD = 15;
+    const THRESHOLD = 5;
     const lasttwo = [0,0];
     let index = 0;
     let lastreading = 0;
@@ -152,7 +157,7 @@ export const handleWeight = (service): AppThunk => (dispatch, getState) => {
   }
 
 export const handleSponge = (service): AppThunk => (dispatch, getState) => {
-    console.log("HANDLING SPONGE!!");
+  
     try{
         rxCharacteristic =  service.getCharacteristic(
           UART_RX_CHARACTERISTIC_UUID
@@ -169,7 +174,7 @@ export const handleSponge = (service): AppThunk => (dispatch, getState) => {
                      
                       const toks = string.split(" ");
                       const [xa, ya, za, xg, yg, zg, pressure, temperature, mic] = toks;
-                    
+                      
                       dispatch(setData({
                           type:"sponge",
                           data:{
@@ -181,7 +186,8 @@ export const handleSponge = (service): AppThunk => (dispatch, getState) => {
                             mic
                           }
                         }
-                      ));      
+                      ));
+                     
                   });
               });
           });
@@ -189,5 +195,69 @@ export const handleSponge = (service): AppThunk => (dispatch, getState) => {
   
         }
   }
+
+
+export const stoprecording = (): AppThunk => (dispatch, getState)=>{
+    try{
+        console.log("stopping recording");
+        
+
+        clearInterval(recordTimer);
+        const {data:{data, recording}} = getState();
+        console.log("saving", recording, data);
+        saveState(recording, data);
+
+    }catch(err){
+        console.error(err);
+    }   
+    dispatch(setRecording(undefined));
+}
+
+export const record = (name): AppThunk => (dispatch, getState)=>{
+    try {
+        const recordings = loadState("recordings");
+        let _name = name;
+
+        if (!recordings){
+            saveState("recordings", [{ts:Date.now(), name}])
+        }else{
+            const recordings = loadState("recordings");
+            //prevent name clash!
+            const names = recordings.map(r=>r.name);
+            let suffix = "", index=0;
+            while (names.indexOf(`${name}${suffix}`) != -1){
+                suffix = `${++index}`;
+            }
+            _name = `${name}${suffix}`;
+            saveState("recordings", [...recordings, {ts:Date.now(), name:_name}])
+        }
+        dispatch(setRecording(_name));
+        
+        console.log("started recording", _name);
+
+        recordTimer = setInterval(()=>{
+            const {data:{data}} = getState();
+            console.log("saving", _name, data);
+            saveState(_name, data);
+        }, 5000);
+    }catch(err){
+        console.log(err);
+    }
+}
+
+
+export const selectData = (state: AppState) => state.data;
+export const selectSpongeData = (state: AppState)   => {
+   const {data:{sponge}} = state.data;
+   return sponge.length > 0 ? sponge[sponge.length -1] : {};
+}
+export const selectWaterData = (state: AppState)    => {
+    const {data:{water}} = state.data;
+    return water.length > 0 ? water[water.length -1] : {};
+ }
+export const selectWeightData = (state: AppState)   => {
+    const {data:{weight}} = state.data;
+    return weight.length > 0 ? weight[weight.length -1] : {};
+ }
 
 export default sensorSlice.reducer

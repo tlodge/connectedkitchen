@@ -6,6 +6,8 @@ import {
   handleSponge,
   handleWeight,
   handleFlow,
+  record,
+  stoprecording,
 } from './features/sensors/sensorSlice'
 import {useAppDispatch } from './hooks/useRedux'
 
@@ -19,9 +21,19 @@ function App() {
   
 
   const [showSetup, setShowSetup] = useState(false);
+  const [recording, setRecording] = useState(false);
+
   const dispatch = useAppDispatch()
  
-  
+  const toggleRecording = ()=>{
+    if (!recording){
+      dispatch(record("experiment_one"));
+    }else{
+      dispatch(stoprecording());
+    }
+    setRecording(!recording);
+  }
+
   const renderSetup = ()=>{
     if (!showSetup){
       return;
@@ -71,6 +83,7 @@ function App() {
     <div className="fullwidth">
       <div className="line">
               <div className="heading">Connected Kitchen <span className="subheading">dashboard</span></div>
+              <div className="menu" onClick={toggleRecording}>{recording ? 'stop recording' : 'record'}</div>
               <div className="menu" onClick={selectDevice}>connect</div>
               <div className="menu" onClick={()=>setShowSetup(!showSetup)}>start</div>
       </div>
