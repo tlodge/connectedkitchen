@@ -11,7 +11,7 @@ import {
     selectSpongeData,
     selectWaterData,
     selectWeightData,
-  } from '../../features/sensors/sensorSlice'
+  } from '../../features/live/liveSlice'
   import { useAppSelector } from '../../hooks/useRedux'
 
 export function Dashboard(props) {
@@ -19,9 +19,7 @@ export function Dashboard(props) {
     const weightData = useAppSelector(selectWeightData);
     const waterData = useAppSelector(selectWaterData);
     const spongeData = useAppSelector(selectSpongeData);
-    
-    console.log("water data is", waterData);
-
+  
     return (<svg width="100vw" viewBox="0 0 366 207" className="main">
        <rect x={0} y={0} width="365" height="206" className="backrect"></rect>
         <Liquid data={weightData.squirted}/>

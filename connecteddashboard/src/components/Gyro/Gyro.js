@@ -1,4 +1,3 @@
-import '../../App.css';
 import { Canvas, useFrame } from "@react-three/fiber";
 import React, { useRef, useState, memo, useEffect } from "react";
 

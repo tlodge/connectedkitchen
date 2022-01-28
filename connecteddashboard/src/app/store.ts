@@ -3,10 +3,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit'
 
 import sensorReducer from '../features/sensors/sensorSlice'
+import liveReducer from '../features/live/liveSlice'
 
 export function makeStore() {
   return configureStore({
-    reducer: { data: sensorReducer },
+    reducer: { sensors: sensorReducer, live: liveReducer },
   })
 }
 

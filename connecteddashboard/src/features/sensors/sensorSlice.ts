@@ -1,7 +1,7 @@
 import { compose, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import type { AppState, AppThunk } from '../../app/store'
-import {loadState,saveState} from './localStorage'
+import {loadState,saveState} from '../../utils/localStorage'
 
 const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 let rxCharacteristic;
@@ -10,17 +10,42 @@ const BASEREADING = 17032;
 const MILLILITRESPERSECOND = 10.8;
 let recordTimer;
 
+
+type Status = Partial<Record<'weight'|'sponge'|'water', boolean>>
+
+export interface BluetoothStatus {
+  weight: boolean,
+  sponge: boolean,
+  water: boolean
+}
+
 export interface SensorState {
   recording: boolean,
-  data: any
+  archive: String,
+  experiment:String,
+  bluetoothstatus: BluetoothStatus, 
+  data: any,
+  recordeddata: any
 }
 
 const initialState: SensorState = {
-  recording: undefined,
-  data: {
+  recording: undefined,  //name of the recording
+  archive: undefined, // name of the archive selected to view
+  experiment:undefined, //name of this experiment (whether recording or not!)
+  bluetoothstatus: {"weight":false, "sponge":false, "water": false},
+
+  recordeddata: {  //currently selecetd longitudinal (recorded) data
+    "water": [],
+    "sponge": [],
+    "weight": [],
+    "time" : {from:0, to:0},
+  },
+
+  data: {   //live data (not necessarily being recorded!)
       "water": [],
       "sponge": [],
       "weight": [],
+      "time" : {from:0, to:0},
   },
 }
 
@@ -31,27 +56,56 @@ export const sensorSlice = createSlice({
   reducers: {    
     setData: (state, action:PayloadAction<any>)=>{
         //append the latest data item to its type
+        
         state.data = {...state.data, [action.payload.type] : [...state.data[action.payload.type],action.payload.data]}
- 
+        saveState(action.payload.type, action.payload.data);
     },
     setRecording: (state, action:PayloadAction<any>)=>{
         //append the latest data item to its type
+        
         state.recording = action.payload;
- 
+        state.data.time.from = Date.now();
+    },
+    stopRecording: (state)=>{
+      
+        state.recording = undefined;
+        state.data.time.to = Date.now();
+        
+    },
+    setArchive: (state, action:PayloadAction<any>)=>{
+    
+        state.archive = action.payload;
+        state.recordeddata = loadState(action.payload);
+    },
+    setExperimentName: (state, action:PayloadAction<any>)=>{
+    
+        state.experiment = action.payload;
+    },
+    setBluetoothStatus: (state, action:PayloadAction<Status>)=>{
+     
+        state.bluetoothstatus = {
+          ...state.bluetoothstatus,
+          ...action.payload,
+        }
     }
   }
 })
-export const { setData, setRecording } = sensorSlice.actions;
+export const { setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName } = sensorSlice.actions;
 
-export const handleFlow = (service): AppThunk => (dispatch, getState) => {
+export const handleFlow = (device,service): AppThunk => (dispatch, getState) => {
 
     let fill = 0;
     let previous = 0;
+
+    device.addEventListener('gattserverdisconnected', ()=>{
+      dispatch(setBluetoothStatus({'water':false}));
+    });
 
     try{
       rxCharacteristic =  service.getCharacteristic(
         UART_RX_CHARACTERISTIC_UUID
       ).then((characteristic)=>{
+        dispatch(setBluetoothStatus({'water':true}));
         return characteristic.startNotifications().then(char => {
           characteristic.addEventListener('characteristicvaluechanged',
             (event)=>{
@@ -86,11 +140,11 @@ export const handleFlow = (service): AppThunk => (dispatch, getState) => {
         })
       });
     }catch(err){
-  
+      dispatch(setBluetoothStatus({'water':false}));
     }
   }
 
-export const handleWeight = (service): AppThunk => (dispatch, getState) => {
+export const handleWeight = (device, service): AppThunk => (dispatch, getState) => {
     
     const THRESHOLD = 5;
     const lasttwo = [0,0];
@@ -99,11 +153,19 @@ export const handleWeight = (service): AppThunk => (dispatch, getState) => {
     let lastthresholdreading = 0;
     let totalsquirted = 0;
 
+    device.addEventListener('gattserverdisconnected', ()=>{
+      dispatch(setBluetoothStatus({'weight':false}));
+    });
+
     try{
       rxCharacteristic =  service.getCharacteristic(
         UART_RX_CHARACTERISTIC_UUID
       ).then((characteristic)=>{
+
+       
+
         return characteristic.startNotifications().then(char => {
+          dispatch(setBluetoothStatus({'weight':true}));
           characteristic.addEventListener('characteristicvaluechanged',
                 (event)=>{
 
@@ -127,7 +189,7 @@ export const handleWeight = (service): AppThunk => (dispatch, getState) => {
                       //omly update weight if last two readings tally
                       if (lasttwo[0]==lasttwo[1] && lastreading != weight){
                         lastreading = weight;
-                        console.log("seen new weight", weight);
+                        
                         if (weight > THRESHOLD){
                           if (lastthresholdreading > 0){
                             totalsquirted += Math.max(0, lastthresholdreading-weight);
@@ -152,18 +214,21 @@ export const handleWeight = (service): AppThunk => (dispatch, getState) => {
         })
       });
     }catch(err){
-  
+      dispatch(setBluetoothStatus({'weight':false}));
     }
   }
 
-export const handleSponge = (service): AppThunk => (dispatch, getState) => {
-  
+export const handleSponge = (device,service): AppThunk => (dispatch, getState) => {
+    device.addEventListener('gattserverdisconnected', ()=>{
+      dispatch(setBluetoothStatus({'sponge':false}));
+    });
+
     try{
         rxCharacteristic =  service.getCharacteristic(
           UART_RX_CHARACTERISTIC_UUID
         ).then((characteristic)=>{
           return characteristic.startNotifications().then(char => {
-            
+            dispatch(setBluetoothStatus({'sponge':true}));
             characteristic.addEventListener('characteristicvaluechanged',
                   (event)=>{
                       
@@ -192,29 +257,32 @@ export const handleSponge = (service): AppThunk => (dispatch, getState) => {
               });
           });
         }catch(err){
-  
+          dispatch(setBluetoothStatus({'sponge':false}));
         }
   }
 
 
 export const stoprecording = (): AppThunk => (dispatch, getState)=>{
     try{
-        console.log("stopping recording");
-        
-
         clearInterval(recordTimer);
-        const {data:{data, recording}} = getState();
-        console.log("saving", recording, data);
-        saveState(recording, data);
-
+        dispatch(stopRecording());
+        const {sensors:{data, experiment}} = getState();
+        saveState(experiment, {...data, time : {...data.time, to:Date.now()}});
     }catch(err){
         console.error(err);
     }   
-    dispatch(setRecording(undefined));
 }
 
-export const record = (name): AppThunk => (dispatch, getState)=>{
+export const record = (): AppThunk => (dispatch, getState)=>{
     try {
+        const {sensors:{experiment:name}} = getState();
+        if (!name){
+          console.log("no name to record under");
+          return;
+        }
+        
+        console.log("recording experiment with name", name);
+
         const recordings = loadState("recordings");
         let _name = name;
 
@@ -229,15 +297,13 @@ export const record = (name): AppThunk => (dispatch, getState)=>{
                 suffix = `${++index}`;
             }
             _name = `${name}${suffix}`;
+            dispatch(setExperimentName(_name));
             saveState("recordings", [...recordings, {ts:Date.now(), name:_name}])
         }
         dispatch(setRecording(_name));
-        
-        console.log("started recording", _name);
-
+      
         recordTimer = setInterval(()=>{
-            const {data:{data}} = getState();
-            console.log("saving", _name, data);
+            const {sensors:{data}} = getState();
             saveState(_name, data);
         }, 5000);
     }catch(err){
@@ -245,19 +311,37 @@ export const record = (name): AppThunk => (dispatch, getState)=>{
     }
 }
 
+export const selectData = (state: AppState) => state.sensors.data;
 
-export const selectData = (state: AppState) => state.data;
+export const selectRecording= (state: AppState)=> state.sensors.recordeddata;
+
+export const selectBluetoothState = (state: AppState)=>{
+  const {bluetoothstatus} = state.sensors;
+  return bluetoothstatus;
+}
+
+export const selectExperimentName = (state: AppState)=>{
+  const {experiment} = state.sensors;
+  return experiment;
+}
+
+export const selectExperiments = (state: AppState)=>{
+  return loadState("recordings");
+}
+
 export const selectSpongeData = (state: AppState)   => {
-   const {data:{sponge}} = state.data;
+   const {data:{sponge}} = state.sensors;
    return sponge.length > 0 ? sponge[sponge.length -1] : {};
 }
+
 export const selectWaterData = (state: AppState)    => {
-    const {data:{water}} = state.data;
+    const {data:{water}} = state.sensors;
     return water.length > 0 ? water[water.length -1] : {};
- }
+}
+
 export const selectWeightData = (state: AppState)   => {
-    const {data:{weight}} = state.data;
+    const {data:{weight}} = state.sensors;
     return weight.length > 0 ? weight[weight.length -1] : {};
- }
+}
 
 export default sensorSlice.reducer
