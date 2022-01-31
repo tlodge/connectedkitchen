@@ -281,7 +281,7 @@ export const record = (): AppThunk => (dispatch, getState)=>{
           return;
         }
         
-        console.log("recording experiment with name", name);
+      
 
         const recordings = loadState("recordings");
         let _name = name;
@@ -314,6 +314,22 @@ export const record = (): AppThunk => (dispatch, getState)=>{
 export const selectData = (state: AppState) => state.sensors.data;
 
 export const selectRecording= (state: AppState)=> state.sensors.recordeddata;
+
+export const selectOtherData = (state:AppState)=>{
+    const recordings = loadState("recordings");
+    const {archive} = state.sensors;
+    if (!archive)
+        return {}
+    
+    const names = recordings.map(r=>r.name).filter(r=>r!=archive);
+    const other = names.reduce((acc, key)=>{
+        return {
+            ...acc,
+            [key] : loadState(key)
+        }
+    },{})
+    return other;
+}
 
 export const selectBluetoothState = (state: AppState)=>{
   const {bluetoothstatus} = state.sensors;

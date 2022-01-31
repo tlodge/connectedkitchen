@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 879 665" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;">
+    <g id="_3dspin" serif:id="3dspin">
+    </g>
+    <rect id="aggregate-one" serif:id="aggregate one" x="0" y="0" width="878.331" height="664.262" style="fill:none;"/>
+    <clipPath id="_clip1">
+        <rect x="0" y="0" width="878.331" height="664.262"/>
+    </clipPath>
+    <g clip-path="url(#_clip1)">
+        <rect x="-4.451" y="-3.758" width="882.391" height="668.444" style="fill:#313f4c;stroke:#070400;stroke-width:1px;"/>
+        <rect id="activity-back" serif:id="activity back" x="441.242" y="4.283" width="432.521" height="599.072" style="fill:#ebe9e0;"/>
+        <g id="activity-cleaning-chart" serif:id="activity cleaning chart">
+            <g id="cleaning-chart" serif:id="cleaning chart">
+                <rect id="clening-big-rect" serif:id="clening big rect" x="474.877" y="70.881" width="356.883" height="35.117" style="fill:#f6c38b;"/>
+                <rect id="cleaning-inner-rect" serif:id="cleaning inner rect" x="478.057" y="74.256" width="92.258" height="27.734" style="fill:#e86119;"/>
+                <path id="water-average-line" serif:id="water average line" d="M550.237,106.165l0.104,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+                <ellipse id="water-average-circle" serif:id="water average circle" cx="550.291" cy="64.61" rx="2.557" ry="2.55" style="fill:#e86119;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+                <text x="539.159px" y="58.827px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+                <text x="489.908px" y="92.122px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#f6c38b;">4 min 12 s</text>
+            </g>
+            <text x="476.165px" y="120.91px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">cleaning items</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-306.005,-1170.36)">
+            <text x="784.076px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">The time you spent cleaning was</text>
+            <text x="932.49px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">24 seconds shorter</text>
+            <text x="1026.97px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">than other participants</text>
+        </g>
+        <g id="activity-cleaning-chart1" serif:id="activity cleaning chart">
+            <g id="cleaning-chart1" serif:id="cleaning chart">
+                <rect id="surfaces-bigrect" serif:id="surfaces bigrect" x="474.877" y="211.748" width="356.883" height="35.117" style="fill:#f6c38b;"/>
+                <rect id="surfaces-inner-rect" serif:id="surfaces inner rect" x="478.057" y="215.123" width="157.06" height="27.734" style="fill:#e86119;"/>
+                <path id="water-average-line1" serif:id="water average line" d="M550.237,247.032l0.104,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+                <ellipse id="water-average-circle1" serif:id="water average circle" cx="550.291" cy="205.477" rx="2.557" ry="2.55" style="fill:#e86119;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+                <text x="539.159px" y="199.694px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+                <text x="489.908px" y="232.989px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#f6c38b;">5 min 11 s</text>
+            </g>
+            <text x="477.15px" y="261.777px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">cleaning surfaces / sinks</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-304.613,-1026.25)">
+            <text x="784.076px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">You spent</text>
+            <text x="831.889px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">1 minute less</text>
+            <text x="898.027px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">cleaning surfaces/sinks than other participants</text>
+        </g>
+        <g id="running-tap-chart" serif:id="running tap chart">
+            <g id="cleaning-chart2" serif:id="cleaning chart">
+                <rect id="running-tap-big-rect" serif:id="running tap big rect" x="474.877" y="357.873" width="356.883" height="35.117" style="fill:#f6c38b;"/>
+                <rect id="runing-tap-inner-rect" serif:id="runing tap inner rect" x="478.057" y="361.248" width="238.253" height="27.734" style="fill:#e86119;"/>
+                <path id="water-average-line2" serif:id="water average line" d="M550.237,393.157l0.104,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+                <ellipse id="water-average-circle2" serif:id="water average circle" cx="550.291" cy="351.602" rx="2.557" ry="2.55" style="fill:#e86119;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+                <text x="539.159px" y="345.819px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+                <text x="489.908px" y="379.114px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#f6c38b;">8 min 11 s</text>
+            </g>
+            <text x="476.979px" y="407.902px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">running tap</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-308.181,-884.229)">
+            <text x="784.076px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">You spent</text>
+            <text x="831.889px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">4 minutes longer running the tap</text>
+            <text x="990.229px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">than other participants</text>
+        </g>
+        <g id="drying-chart" serif:id="drying chart">
+            <g id="cleaning-chart3" serif:id="cleaning chart">
+                <rect id="drying-big-rect" serif:id="drying big rect" x="474.877" y="499.125" width="356.883" height="35.117" style="fill:#f6c38b;"/>
+                <rect id="drying-inner-rect" serif:id="drying inner rect" x="478.057" y="502.5" width="238.253" height="27.734" style="fill:#e86119;"/>
+                <path id="water-average-line3" serif:id="water average line" d="M550.237,534.409l0.104,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+                <ellipse id="water-average-circle3" serif:id="water average circle" cx="550.291" cy="492.854" rx="2.557" ry="2.55" style="fill:#e86119;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+                <text x="539.159px" y="487.071px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+                <text x="489.908px" y="520.366px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#f6c38b;">8 min 11 s</text>
+            </g>
+            <text x="477.742px" y="549.149px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">drying</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-309.695,-741.501)">
+            <text x="786.574px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">The time you spent drying was</text>
+            <text x="924.972px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">5 minutes shorter</text>
+            <text x="1011.66px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">than other participants</text>
+        </g>
+        <rect id="water-back" serif:id="water back" x="4.522" y="4.283" width="432.521" height="160.885" style="fill:#ebe9e0;"/>
+        <rect id="time-back" serif:id="time back" x="4.52" y="442.785" width="432.521" height="160.885" style="fill:#ebe9e0;"/>
+        <text x="45.852px" y="34.358px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:12px;">water usage</text>
+        <text x="45.811px" y="468.745px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:12px;">time taken</text>
+        <text x="481.954px" y="34.663px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:12px;">activity</text>
+        <g id="water-chart" serif:id="water chart">
+            <rect id="big-rect" serif:id="big rect" x="40.994" y="71.435" width="356.883" height="35.117" style="fill:#8bbef6;"/>
+            <rect id="inner-rect" serif:id="inner rect" x="44.174" y="74.81" width="92.258" height="27.734" style="fill:#005293;"/>
+            <path id="water-average-line4" serif:id="water average line" d="M397.398,106.588l0.103,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+            <ellipse id="water-average-circle4" serif:id="water average circle" cx="397.183" cy="64.288" rx="2.557" ry="2.55" style="fill:#8bbef6;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+            <text x="386.051px" y="58.506px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+            <text x="60.303px" y="92.677px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#8bbef6;">2.3 litres</text>
+        </g>
+        <g id="timechart">
+            <rect id="big-rect1" serif:id="big rect" x="40.994" y="494.826" width="356.883" height="35.117" style="fill:#f6f28b;"/>
+            <rect id="inner-rect1" serif:id="inner rect" x="44.174" y="498.201" width="278.094" height="27.734" style="fill:#e8ca19;"/>
+            <path id="water-average-line5" serif:id="water average line" d="M116.355,530.11l0.103,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+            <text x="105.276px" y="482.772px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+            <text x="54.244px" y="516.067px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#f6f28b;">10m min 23s</text>
+            <ellipse id="water-average-circle5" serif:id="water average circle" cx="116.408" cy="488.555" rx="2.557" ry="2.55" style="fill:#f6f28b;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+        </g>
+        <g transform="matrix(1,0,0,1,-727.826,-1176.14)">
+            <text x="770.463px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">You used 2.3 litres of water, which is</text>
+            <text x="935.541px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">120 ml more</text>
+            <text x="996.684px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">than average</text>
+        </g>
+        <rect id="washinh-up-back" serif:id="washinh up back" x="4.522" y="168.473" width="432.521" height="270.698" style="fill:#ebe9e0;"/>
+        <text x="45.852px" y="194.987px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:12px;">washing up liquid</text>
+        <g id="washing-up-chart" serif:id="washing up chart">
+            <text x="43.237px" y="279.574px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">amount used</text>
+            <text x="42.297px" y="369.356px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">number of times used</text>
+            <text x="55.842px" y="337.601px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#93d998;">5</text>
+            <rect id="amount-used-rect" serif:id="amount used rect" x="40.994" y="226.095" width="356.883" height="35.117" style="fill:#93d998;"/>
+            <rect id="inner-amount-used-rect" serif:id="inner amount used rect" x="44.174" y="229.47" width="263.523" height="27.734" style="fill:#22743a;"/>
+            <path id="water-average-line6" serif:id="water average line" d="M330.093,261.735l0.103,-40.375" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+            <ellipse id="water-average-circle6" serif:id="water average circle" cx="330.147" cy="220.18" rx="2.557" ry="2.55" style="fill:#93d998;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+            <text x="319.014px" y="214.397px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+            <text x="57.418px" y="247.54px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#93d998;">10g</text>
+            <rect id="big-rect2" serif:id="big rect" x="41.428" y="317.924" width="356.883" height="35.117" style="fill:#93d998;"/>
+            <rect id="inner-rect2" serif:id="inner rect" x="44.608" y="321.299" width="263.523" height="27.734" style="fill:#22743a;"/>
+            <path id="water-average-line7" serif:id="water average line" d="M330.526,353.564l0.104,-40.376" style="fill:none;stroke:#070400;stroke-width:1px;"/>
+            <ellipse id="water-average-circle7" serif:id="water average circle" cx="330.58" cy="312.008" rx="2.557" ry="2.55" style="fill:#93d998;stroke:#000;stroke-width:0.97px;stroke-linecap:round;"/>
+            <text x="319.448px" y="306.226px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;">average</text>
+            <text x="57.852px" y="339.368px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:#93d998;">10g</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-691.667,-907.283)">
+            <text x="731.532px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">You used</text>
+            <text x="776.567px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">2 grams less</text>
+            <text x="839.941px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">washing up liquid and used it</text>
+            <text x="971.142px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">2 times more</text>
+            <text x="1035.62px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">than average</text>
+        </g>
+        <text x="44.24px" y="550.358px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;">time taken</text>
+        <g transform="matrix(1,0,0,1,-757.78,-743.623)">
+            <text x="799.907px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">You spent</text>
+            <text x="847.719px" y="1316.58px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;">22 seconds less time</text>
+            <text x="950.551px" y="1316.58px" style="font-family:'Helvetica';font-size:10px;">cleaning than other participants</text>
+        </g>
+        <g transform="matrix(1,0,0,1,-637.504,-1184.09)">
+            <text x="950.577px" y="1824.33px" style="font-family:'Helvetica';font-size:20px;fill:#fff;">your cleaning</text>
+            <text x="1075.1px" y="1824.33px" style="font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:20px;fill:#fff;">ﬁnal metrics</text>
+        </g>
+        <path d="M834.699,603.001c-3.864,-3.165 -10.824,-5.28 -18.761,-5.28c-7.991,0 -14.991,2.143 -18.839,5.344c-3.864,-3.165 -10.825,-5.279 -18.762,-5.279c-7.99,-0 -14.991,2.142 -18.839,5.343c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.99,-0 -14.991,2.142 -18.839,5.343c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.991,0 -14.991,2.143 -18.839,5.344c-3.864,-3.166 -10.825,-5.28 -18.762,-5.28c-7.99,0 -14.99,2.143 -18.839,5.344c-3.864,-3.165 -10.824,-5.28 -18.761,-5.28c-7.99,0 -14.991,2.143 -18.839,5.344c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.991,-0 -14.991,2.142 -18.839,5.343c-3.864,-3.165 -10.825,-5.279 -18.762,-5.279c-7.99,-0 -14.99,2.143 -18.839,5.344c-3.864,-3.166 -10.824,-5.28 -18.761,-5.28c-7.99,0 -14.991,2.143 -18.839,5.344c-3.864,-3.166 -10.824,-5.28 -18.761,-5.28c-7.991,0 -14.991,2.143 -18.839,5.344c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.991,-0 -14.991,2.142 -18.84,5.343c-3.863,-3.165 -10.824,-5.279 -18.761,-5.279c-7.99,-0 -14.991,2.142 -18.839,5.343c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.99,-0 -14.991,2.143 -18.839,5.344c-3.864,-3.166 -10.824,-5.28 -18.761,-5.28c-7.991,0 -14.991,2.143 -18.839,5.344c-3.864,-3.165 -10.825,-5.28 -18.762,-5.28c-7.99,0 -14.99,2.143 -18.839,5.344c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.99,-0 -14.991,2.142 -18.839,5.343c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-7.991,-0 -14.991,2.142 -18.839,5.343c-3.864,-3.165 -10.825,-5.279 -18.762,-5.279c-7.99,0 -14.99,2.143 -18.839,5.344c-3.864,-3.166 -10.824,-5.28 -18.761,-5.28c-7.99,0 -14.991,2.143 -18.839,5.344c-3.864,-3.165 -10.824,-5.28 -18.761,-5.28c-7.991,0 -14.991,2.143 -18.839,5.344c-3.864,-3.165 -10.824,-5.279 -18.761,-5.279c-8.248,-0 -15.441,2.283 -19.201,5.656c-3.656,-3.547 -11.038,-5.973 -19.54,-5.973c-12.132,0 -21.982,4.94 -21.982,11.025c-0,1.935 1.015,3.836 2.945,5.512l38.074,-0c0.056,-0.048 0.11,-0.097 0.164,-0.145c0.16,0.155 0.327,0.309 0.502,0.461l38.075,0l0.073,-0.064l37.527,-0l0.073,-0.064l37.527,-0l0.074,-0.065l37.527,0l0.073,-0.064l37.527,0l0.073,-0.064l37.527,0l0.074,-0.064l37.527,-0l0.073,-0.064l37.527,-0l0.073,-0.065l37.527,0l0.074,-0.064l37.527,0l0.073,-0.064l37.527,-0l0.073,-0.064l37.527,-0l0.073,-0.064l37.528,-0l0.073,-0.065l37.527,0l0.073,-0.064l37.527,0l0.073,-0.064l37.527,-0l0.074,-0.064l37.527,-0l0.073,-0.065l37.527,0l0.073,-0.064l37.527,0l0.074,-0.064l37.527,0l0.073,-0.064l37.527,-0l0.073,-0.064l37.527,-0c1.93,-1.676 2.945,-3.577 2.945,-5.513c0,-6.084 -9.85,-11.024 -21.982,-11.024c-7.991,0 -14.991,2.143 -18.839,5.344Z" style="fill:#313f4c;"/>
+    </g>
+</svg>

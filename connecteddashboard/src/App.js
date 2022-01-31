@@ -5,6 +5,7 @@ import {
   selectBluetoothState,
   selectExperimentName,
   selectRecording,
+  selectOtherData,
   setArchive,
   setExperimentName,
   handleFlow,
@@ -30,7 +31,9 @@ function App() {
   const experiments = useSelector(selectExperiments);
   const bluetooth = useSelector(selectBluetoothState);
   const experimentName = useSelector(selectExperimentName);
+  
   const archiveData = useSelector(selectRecording);
+  const otherData = useSelector(selectOtherData);
 
   const [screen, setScreen] = useState("menu");
   const [showSetup, setShowSetup] = useState(false);
@@ -122,7 +125,7 @@ function App() {
   }
 
   const renderExperiments = ()=>{
-    const rows = experiments.sort().map(e=>{
+    const rows = (experiments||[]).sort().map(e=>{
       return <tr>
         <td>{`${new Date(e.ts).toLocaleString()}`}</td>
         <td>{e.name}</td>
@@ -165,7 +168,7 @@ function App() {
   }
 
   const renderLongitudinal = ()=>{
-    return <Longitudinal data={archiveData}/>
+    return <Longitudinal data={archiveData} other={otherData}/>
   }
 
   return (<>

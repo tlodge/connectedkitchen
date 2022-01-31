@@ -1,0 +1,102 @@
+.svg{
+    fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.5;
+}
+
+.lngbackrect{
+    fill:#ebe9e0;
+}
+
+.cleaning-big-rect{
+    fill:#f6c38b;
+}
+
+.cleaning-inner-rect{
+    fill:#e86119;
+}
+
+.surfaces-big-rect{
+    fill:#f6c38b;
+}
+
+.surfaces-inner-rect{
+    fill:#e86119;
+}
+
+.tap-big-rect{
+    fill:#f6c38b;
+}
+
+.tap-inner-rect{
+    fill:#e86119;
+}
+
+.drying-big-rect{
+    fill:#f6c38b;
+}
+
+.drying-inner-rect{
+    fill:#e86119;
+}
+
+.water-big-rect{
+    fill:#8bbef6;
+}
+
+.water-inner-rect{
+    fill:#005293;
+}
+
+.time-big-rect{
+    fill:#f6f28b;
+}
+
+.time-inner-rect{
+    fill:#e8ca19;
+}
+
+.liquid-big-rect{
+
+    fill:#93d998;
+}
+
+.liquid-inner-rect{
+    fill:#22743a;
+}
+.averageline{
+    fill:none;stroke:#070400;stroke-width:1px;
+}
+
+.average-circle{
+    fill:#e86119;stroke:#000;stroke-width:0.97px;stroke-linecap:round;
+}
+
+.value-label{
+    font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:11px;fill:white;
+}
+
+.title{
+    font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:9px;
+}
+
+.textinfo{
+    font-family:'Helvetica';font-size:10px;
+}
+
+.textinfobold{
+    font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:10px;
+}
+
+.averagetext{
+    font-family:'Helvetica-Bold', 'Helvetica';font-weight:700;font-size:6px;text-anchor: middle;
+}
+
+.jumbotext{
+    font-family:'Helvetica';font-size:20px;fill:#fff;
+}
+
+.jumbobold{
+    font-family:'Helvetica';font-size:20px;fill:#fff;
+}
+.bottomborder{
+    fill:#313f4c;
+}
