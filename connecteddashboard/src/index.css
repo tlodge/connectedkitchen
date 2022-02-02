@@ -20,3 +20,108 @@ table thead tr th{
 table tbody tr td{
   padding: 10px;
 }
+
+.button{
+  display:inline-block;
+  padding:0.3em 1.2em;
+  margin:0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:500;
+  color:#FFFFFF;
+  background-color:#4eb5f1;
+  text-align:center;
+  outline:0;
+  border:0;
+}
+
+.red{
+  background-color:#d30f51;
+}
+
+.bigbutton{
+  display:inline-block;
+  padding:1.3em 1.2em;
+  margin:0 0.3em 0.3em 0;
+  box-sizing: border-box;
+  text-decoration:none;
+  font-family:'Roboto',sans-serif;
+  font-weight:800;
+  color:#FFFFFF;
+  background-color:#da7f2a;
+  text-align:center;
+  outline:0;
+  border:0;
+}
+
+.activitybuttons{
+  display:flex;
+  flex-direction: row;
+  width: 100vw;
+  justify-content: center;
+  margin:10px;
+}
+
+.menubar{
+  background: black;
+  width: 100vw;
+  height: 50px;
+  padding: 7px;
+  color:white;
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 19px 10px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+}
+
+.menuleft{
+  display: flex;
+  flex: 1 1 auto;
+  margin-left:20px;
+}
+
+.menuright{
+  display: flex;
+  flex: 1 1 auto;
+  justify-content: flex-end;
+  padding:10px;
+}
+
+.menuitem{
+  padding:7px;
+}
+.experimentContainer{
+  width: 100vw;
+  height: calc(100vh - 113px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  background-color: #ffffff00;
+}
+
+.experimentBox {
+  width: 300px;
+  height: 60px;
+  background: white;
+  box-shadow: 0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22);
+  border-radius: 7px;
+  padding:20px;
+}
+
+.expheading{
+  font-size: 1.2em;
+  margin:0px 0px 20px 10px;
+  font-weight: bold;
+}
+
+.bluetoothtext{
+  font-size: 0.8em;
+  font-weight: bold;
+}
+.experimentsContainer{
+  background: #e7e4e4;
+  padding:20px;
+}

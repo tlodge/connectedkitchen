@@ -7,11 +7,20 @@ import ActivityCleaningTimeChart from "./ActivityCleaningTimeChart";
 import ActivitySurfacesChart from "./ActivitySurfacesChart";
 import ActivityTapChart from "./ActivityTapChart";
 import ActivityDryingChart from "./ActivityDryingChart";
-import { max } from "d3";
+
+
+const timelabelfn = (value)=>{
+    const seconds = parseInt(Math.floor(value / 1000));
+    const minutes = parseInt(Math.floor(seconds / 60));
+    const remainder = seconds - 60*minutes;
+    if (minutes > 0){
+        return `${minutes}m ${remainder}s`
+    }
+    return `${remainder}s`
+}
 
 function Longitudinal({data,other}){
-    console.log("longitudinal data is", data);
-    console.log("and other data is", other);
+   
     const renderFooter = ()=>{
         return  <g> 
                     <g transform="matrix(1,0,0,1,-637.504,-1184.09)">
@@ -34,15 +43,7 @@ function Longitudinal({data,other}){
             average: Object.keys(other).reduce((acc, key)=>{
                 return other[key].time.to - other[key].time.from;
             },0) / Object.keys(other).length,
-            labelfn : (value)=>{
-                const seconds = parseInt(Math.floor(value / 1000));
-                const minutes = parseInt(Math.floor(seconds / 60));
-                const remainder = seconds - 60*minutes;
-                if (minutes > 0){
-                    return `${minutes}m ${remainder}s`
-                }
-                return `${remainder}s`
-            }
+            labelfn : timelabelfn,
         }
     }
 
@@ -81,7 +82,7 @@ function Longitudinal({data,other}){
                 average: Object.keys(other).reduce((acc, key)=>{
                     return acc + other[key].weight.length
                 },0) / Object.keys(other).length,
-                labelfn: (value)=>`${value} times`
+                labelfn: (value)=>`${value.toFixed(0)} times`
             }
         }
     }
@@ -90,7 +91,7 @@ function Longitudinal({data,other}){
         const {water=[]} = data;
 
         const calctime = (arr)=>{
-            const result = arr.reduce((acc, item)=>{
+            return arr.reduce((acc, item)=>{
                 if (item.flow<=0){
                     return {total: acc.total + (item.ts - acc.firstts), firstts:0}
                 }
@@ -99,28 +100,40 @@ function Longitudinal({data,other}){
                 }
                 return acc;
             },{total:0, firstts:0}).total;
-
-            console.log("calctime for", arr, " is", result);
-            return result;
         }
         return {
             value: calctime(water),
             max:   Object.keys(other).reduce((acc, key)=>{
-                console.log("maxing", acc, other[key].water);
                 return Math.max(acc, calctime(other[key].water))
             }, calctime(water)),
             average: Object.keys(other).reduce((acc, key)=>{
                 return acc + calctime(other[key].water)
             }, 0) / Object.keys(other).length,
-            labelfn : (value)=>{
-                const seconds = parseInt(Math.floor(value / 1000));
-                const minutes = parseInt(Math.floor(seconds / 60));
-                const remainder = seconds - 60*minutes;
-                if (minutes > 0){
-                    return `${minutes}m ${remainder}s`
-                }
-                return `${remainder}s`
-            }
+            labelfn : timelabelfn
+        }
+    }
+
+    const activitydata = (type)=>{
+        const {activities={}}= data;
+        
+        const calctotal = (arr=[])=>{
+            return arr.reduce((acc,item)=>{
+                if (item.from && item.to){
+                    return acc + (item.to-item.from)
+                }    
+                return acc;
+            },0);
+        }
+
+        return{
+            value: calctotal(activities[type]),
+            max: Object.keys(other).reduce((acc, key)=>{
+                return Math.max(acc + calctotal((other[key].activities || {})[type]))
+            },calctotal(activities[type])),
+            average:  Object.keys(other).reduce((acc, key)=>{
+                return acc + calctotal((other[key].activities || {})[type])
+            },calctotal(activities[type])),
+            labelfn: timelabelfn,
         }
     }
 
@@ -137,10 +150,10 @@ function Longitudinal({data,other}){
 
             <text x="481.954px" y="34.663px" className="title">activity</text>
 
-            <ActivityCleaningTimeChart/>
-            <ActivitySurfacesChart/>
+            <ActivityCleaningTimeChart {...activitydata("items")}/>
+            <ActivitySurfacesChart {...activitydata("surfaces")}/>
             <ActivityTapChart {...taptimedata()}/>
-            <ActivityDryingChart />
+            <ActivityDryingChart {...activitydata("drying")}/>
         
             {renderFooter()}    
         </g>

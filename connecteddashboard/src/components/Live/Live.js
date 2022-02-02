@@ -1,11 +1,13 @@
 import './Live.css';
 import React, {useState} from "react";
 import {Dashboard} from '../Dashboard'
+
 import {Gyro} from '../Gyro'
 
 function Live({name}) {
    
-  return (<div className="App">
+  const renderLive = ()=>{
+    return (<div className="App">
     
     <div className="fullwidth">
       <div className="line">
@@ -22,11 +24,16 @@ function Live({name}) {
             <div>
               {/*<Gyro rotation={(spongeData || {}).gyro}/>*/}
             </div>
-            <div className="message">A message goes here!</div>
+            <div className="message">connected kitchen</div>
             </div>
         </div>
-    </div>
-  );
+    </div>)
+  }
+
+  
+  return <>{renderLive()}</>
+
+
 }
 
 export default Live;

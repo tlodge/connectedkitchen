@@ -1,18 +1,23 @@
 import React, {useState, useEffect} from "react";
 import { useSelector } from "react-redux";
+import "./index.css";
+
 import {
   selectExperiments,
   selectBluetoothState,
   selectExperimentName,
   selectRecording,
   selectOtherData,
+  selectActivities,
   setArchive,
+  setActivity,
   setExperimentName,
   handleFlow,
   handleSponge,
   handleWeight,
   record,
-  stoprecording
+  stoprecording,
+  deleteArchive,
 } from './features/sensors/sensorSlice'
 
 
@@ -31,13 +36,22 @@ function App() {
   const experiments = useSelector(selectExperiments);
   const bluetooth = useSelector(selectBluetoothState);
   const experimentName = useSelector(selectExperimentName);
-  
   const archiveData = useSelector(selectRecording);
   const otherData = useSelector(selectOtherData);
 
   const [screen, setScreen] = useState("menu");
   const [showSetup, setShowSetup] = useState(false);
   const [recording, setRecording] = useState(false);
+
+  const _setActivity = (activity)=>{
+  
+    dispatch(setActivity(activity));
+  }
+
+  const _deleteArchive = (name)=>{
+    console.log("delting atchive", name);
+    dispatch(deleteArchive(name));
+  }
 
   const toggleRecording = ()=>{
     if (!recording){
@@ -115,10 +129,10 @@ function App() {
     return <div className="experimentContainer">
       <div className="experimentBox">
           <div className="experimentForm">
-              <div>name</div>
+              <div>new experiment name</div>
               <input className="nameInput" type="text" placeholder="experiment name" onChange={handleExperimentNameChange} value={experimentName}></input>
-              <button onClick={okClicked}>ok</button>
-              <button onClick={cancelSetup}>cancel</button>
+              <button style={{margin:10}} className="button" onClick={okClicked}>ok</button>
+              <button className="button" onClick={cancelSetup}>cancel</button>
           </div>
       </div>
     </div>
@@ -129,7 +143,8 @@ function App() {
       return <tr>
         <td>{`${new Date(e.ts).toLocaleString()}`}</td>
         <td>{e.name}</td>
-        <td><button onClick={()=>selectArchive(e.name)}>show</button></td>
+        <td><button className="button" onClick={()=>selectArchive(e.name)}>show</button></td>
+        <td><button className="button red" onClick={()=>{_deleteArchive(e.name)}}>delete</button></td>
       </tr>
     });
 
@@ -138,7 +153,8 @@ function App() {
           <tr>
             <th>time</th>
             <th>name</th>
-            <th>action</th>
+            <th></th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -149,18 +165,36 @@ function App() {
   }
 
   const renderBluetooth = ()=>{
-    return Object.keys(bluetooth).map(k=><div>{k} : {bluetooth[k] ? "connected": "not connected"}</div>)
+    return Object.keys(bluetooth).map(k=><div className="menuitem"><div className="bluetoothtext">{k} : {bluetooth[k] ? "connected": "not connected"}</div></div>)
+  }
+
+  const renderWoz = ()=>{
+    return <div className="activitybuttons">
+        <button className="bigbutton" onClick={()=>{_setActivity("surfaces")}}>CLEANING SURFACES</button>
+        <button className="bigbutton" onClick={()=>{_setActivity("items")}}>WASHING ITEMS</button>
+        <button className="bigbutton" onClick={()=>{_setActivity("drying")}}>DRYING ITEMS</button>
+        <button className="bigbutton" onClick={()=>{_setActivity()}}>NO ACTIVITY</button>
+    </div>
   }
 
   const renderMenu = ()=>{
     return <>
-      {showSetup && renderSetup()}
-      {!recording && renderExperiments()}
-      <button onClick={()=>setShowSetup(true)}>new experiment</button>
-      <button onClick={()=>selectDevice()}>connect</button>  
-      {experimentName && experimentName.trim() !== "" && <button onClick={toggleRecording}>{recording ? 'stop recording' : 'record'}</button>}
-      {renderBluetooth()}
-    </>
+            <div className="menubar">
+              <div className="menuleft">
+                <button className="button" onClick={()=>setShowSetup(true)}>new experiment</button>
+                <button className="button" onClick={()=>selectDevice()}>connect</button>  
+                {experimentName && experimentName.trim() !== "" && <button  className="button" onClick={toggleRecording}>{recording ? 'stop recording' : 'record'}</button>}
+              </div>
+              <div className="menuright">
+                {renderBluetooth()}
+              </div>
+            </div>
+            {showSetup && renderSetup()}
+            <div className="experimentsContainer">
+              <div className="expheading">recorded experiments</div>
+              {!recording && renderExperiments()}
+            </div>
+          </>
   }
   
   const renderLive = ()=>{
@@ -175,6 +209,7 @@ function App() {
       {screen==="menu" && renderMenu()}
       {screen==="live" && renderLive()}
       {screen==="long" && renderLongitudinal()}
+      {recording && renderWoz()}
   </>);
 }
 

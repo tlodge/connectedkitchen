@@ -2,7 +2,8 @@ import { compose, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/
 
 import type { AppState, AppThunk } from '../../app/store'
 import {loadState, saveState} from '../../utils/localStorage'
-let captureTimer;
+let captureTimer, screenTimer;
+
 type Status = Partial<Record<'weight'|'sponge'|'water', boolean>>
 
 export interface BluetoothStatus {
@@ -68,16 +69,16 @@ export const sensorSlice = createSlice({
 export const { setData, setRecording, stopRecording, setExperiment, setBluetoothStatus } = sensorSlice.actions;
 
 export const init = (): AppThunk => (dispatch, getState) => {
-      console.log("resetting state!");
+   
 
       saveState("water", {});
       saveState("sponge",{});
       saveState("weight",{});
       captureTimer = setInterval(()=>{
-          const water = loadState("water")    || {};
-          const sponge = loadState("sponge")  || {};
-          const weight = loadState("weight")  || {};
-          dispatch(setData({water,sponge,weight}));
+        const water = loadState("water")    || {};
+        const sponge = loadState("sponge")  || {};
+        const weight = loadState("weight")  || {};
+        dispatch(setData({water,sponge,weight}));
       },500)
 }
 

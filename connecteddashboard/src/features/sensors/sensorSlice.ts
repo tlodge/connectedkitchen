@@ -21,11 +21,12 @@ export interface BluetoothStatus {
 
 export interface SensorState {
   recording: boolean,
-  archive: String,
-  experiment:String,
+  archive: string,
+  experiment:string,
   bluetoothstatus: BluetoothStatus, 
   data: any,
   recordeddata: any
+  activity: string,
 }
 
 const initialState: SensorState = {
@@ -46,7 +47,14 @@ const initialState: SensorState = {
       "sponge": [],
       "weight": [],
       "time" : {from:0, to:0},
+      "activities":{
+        "drying": [],
+        "surfaces":[],
+        "items":[],
+      } 
   },
+
+  activity: undefined,
 }
 
 export const sensorSlice = createSlice({
@@ -62,16 +70,43 @@ export const sensorSlice = createSlice({
     },
     setRecording: (state, action:PayloadAction<any>)=>{
         //append the latest data item to its type
-        
+        //reset data
+        state.data = {
+            ...initialState.data,
+            time : {
+                ...initialState.data.time,
+                from: Date.now(),
+            }
+        } 
         state.recording = action.payload;
-        state.data.time.from = Date.now();
     },
     stopRecording: (state)=>{
       
         state.recording = undefined;
         state.data.time.to = Date.now();
-        
     },
+    setActivity: (state, action:PayloadAction<any>)=>{
+        const activity = action.payload;
+        //set last activity end time if last activity still exists
+        if (state.activity){
+            state.data.activities[state.activity] = (state.data.activities[state.activity] || []).map((item,index)=>{
+                if (index == state.data.activities[state.activity].length -1){
+                    return {...item, to: Date.now()}
+                }
+                return item;
+            })
+        }
+        state.activity = activity;
+
+        //if this is a new activity, record it!
+        if (activity){
+            state.data.activities = {
+                ...state.data.activities,
+                [activity]: [...(state.data.activities[activity]||[]), {from:Date.now()}]
+            }
+        }
+    },
+
     setArchive: (state, action:PayloadAction<any>)=>{
     
         state.archive = action.payload;
@@ -87,10 +122,28 @@ export const sensorSlice = createSlice({
           ...state.bluetoothstatus,
           ...action.payload,
         }
+    },
+    deleteArchive:  (state, action:PayloadAction<Status>)=>{
+        console.log("in del arhive");
+        const recordings = loadState("recordings");
+        console.log("recordings", recordings);
+        const deleted = loadState("deleted") || [];
+
+        const filtered = recordings.reduce((acc, item)=>{
+            if (item.name != action.payload){
+                return [...acc, item]
+            }
+            return acc;
+        }, []);
+
+        saveState("recordings", filtered);
+        saveState("deleted", [...deleted, action.payload])
+       
+
     }
   }
 })
-export const { setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName } = sensorSlice.actions;
+export const { setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName, setActivity, deleteArchive } = sensorSlice.actions;
 
 export const handleFlow = (device,service): AppThunk => (dispatch, getState) => {
 
@@ -146,7 +199,7 @@ export const handleFlow = (device,service): AppThunk => (dispatch, getState) => 
 
 export const handleWeight = (device, service): AppThunk => (dispatch, getState) => {
     
-    const THRESHOLD = 5;
+    const THRESHOLD = 2;
     const lasttwo = [0,0];
     let index = 0;
     let lastreading = 0;
@@ -191,10 +244,9 @@ export const handleWeight = (device, service): AppThunk => (dispatch, getState) 
                         lastreading = weight;
                         
                         if (weight > THRESHOLD){
-                          if (lastthresholdreading > 0){
+                          if (lastthresholdreading > 0 && lastthresholdreading-weight > THRESHOLD){
                             totalsquirted += Math.max(0, lastthresholdreading-weight);
-                            console.log(totalsquirted);
-
+                           
                             dispatch(setData({
                                 type:"weight",
                                 data:{
@@ -204,6 +256,8 @@ export const handleWeight = (device, service): AppThunk => (dispatch, getState) 
                             }));
                           }
                           lastthresholdreading = weight;
+                        }else{
+                            console.log("not recording, less than threshold");
                         }
                         
                       }
@@ -281,8 +335,6 @@ export const record = (): AppThunk => (dispatch, getState)=>{
           return;
         }
         
-      
-
         const recordings = loadState("recordings");
         let _name = name;
 
@@ -343,6 +395,10 @@ export const selectExperimentName = (state: AppState)=>{
 
 export const selectExperiments = (state: AppState)=>{
   return loadState("recordings");
+}
+
+export const selectActivities = (state:AppState)=>{
+    return state.sensors.data.activities;
 }
 
 export const selectSpongeData = (state: AppState)   => {
