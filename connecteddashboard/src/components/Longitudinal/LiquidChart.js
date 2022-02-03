@@ -6,7 +6,7 @@ function LiquidChart({weight, used}){
 
     const {value:wvalue, average:waverage, max:wmax, labelfn:wlabelfn} = weight;
     const {value:uvalue, average:uaverage, max:umax, labelfn:ulabelfn} = used;
-    console.log(wvalue, waverage, wmax);
+  
 
     const wscale = d3.scaleLinear().domain([0,wmax]).range([0,350]);
     const uscale = d3.scaleLinear().domain([0,umax]).range([0,350]);

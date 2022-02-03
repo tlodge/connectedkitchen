@@ -8,7 +8,7 @@ import {
   selectExperimentName,
   selectRecording,
   selectOtherData,
-  selectActivities,
+  selectActivity,
   setArchive,
   setActivity,
   setExperimentName,
@@ -38,7 +38,7 @@ function App() {
   const experimentName = useSelector(selectExperimentName);
   const archiveData = useSelector(selectRecording);
   const otherData = useSelector(selectOtherData);
-
+  const activity = useSelector(selectActivity);
   const [screen, setScreen] = useState("menu");
   const [showSetup, setShowSetup] = useState(false);
   const [recording, setRecording] = useState(false);
@@ -49,7 +49,6 @@ function App() {
   }
 
   const _deleteArchive = (name)=>{
-    console.log("delting atchive", name);
     dispatch(deleteArchive(name));
   }
 
@@ -64,8 +63,6 @@ function App() {
   
 
   useEffect(()=>{
-    console.log(window.location.pathname);
-
     const {pathname} = window.location || "";
     if (pathname.trim() === "/live"){
       setScreen("live");
@@ -140,7 +137,7 @@ function App() {
 
   const renderExperiments = ()=>{
     const rows = (experiments||[]).sort().map(e=>{
-      return <tr>
+      return <tr key={e.name}>
         <td>{`${new Date(e.ts).toLocaleString()}`}</td>
         <td>{e.name}</td>
         <td><button className="button" onClick={()=>selectArchive(e.name)}>show</button></td>
@@ -165,15 +162,15 @@ function App() {
   }
 
   const renderBluetooth = ()=>{
-    return Object.keys(bluetooth).map(k=><div className="menuitem"><div className="bluetoothtext">{k} : {bluetooth[k] ? "connected": "not connected"}</div></div>)
+    return Object.keys(bluetooth).map(k=><div key={k} className="menuitem"><div className="bluetoothtext">{k} : {bluetooth[k] ? "connected": "not connected"}</div></div>)
   }
 
   const renderWoz = ()=>{
     return <div className="activitybuttons">
-        <button className="bigbutton" onClick={()=>{_setActivity("surfaces")}}>CLEANING SURFACES</button>
-        <button className="bigbutton" onClick={()=>{_setActivity("items")}}>WASHING ITEMS</button>
-        <button className="bigbutton" onClick={()=>{_setActivity("drying")}}>DRYING ITEMS</button>
-        <button className="bigbutton" onClick={()=>{_setActivity()}}>NO ACTIVITY</button>
+        <button className={`bigbutton ${activity==="surfaces" ? "red" : ""}`} onClick={()=>{_setActivity("surfaces")}}>CLEANING SURFACES</button>
+        <button className={`bigbutton ${activity==="items" ? "red" : ""} `} onClick={()=>{_setActivity("items")}}>WASHING ITEMS</button>
+        <button className={`bigbutton ${activity==="drying" ? "red" : ""}`} onClick={()=>{_setActivity("drying")}}>DRYING ITEMS</button>
+        <button className={`bigbutton`} onClick={()=>{_setActivity()}}>NO ACTIVITY</button>
     </div>
   }
 

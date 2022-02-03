@@ -3,7 +3,7 @@ import './style.css'
 import * as d3 from 'd3'
 
 function ActivityCleaningTimeChart({value, max, average, labelfn}){
-    console.log("have ", value, max, average);
+ 
     
     const scale = d3.scaleLinear().domain([0,max]).range([0,350]);
 

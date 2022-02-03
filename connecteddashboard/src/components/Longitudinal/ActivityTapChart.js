@@ -4,7 +4,7 @@ import * as d3 from 'd3'
 
 function ActivityTapChart({value, max, average, labelfn}){
 
-    console.log("timedata is", value, max, average);
+ 
 
     const scale = d3.scaleLinear().domain([0,max]).range([0,350]);
 

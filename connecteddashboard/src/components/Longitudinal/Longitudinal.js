@@ -63,24 +63,27 @@ function Longitudinal({data,other}){
 
     const liquiddata = ()=>{
         const {weight=[]} = data;
+        const squirted = weight.length > 0 ? weight[weight.length-1].squirted : 0;
         return{
             weight:{
-                value: weight[weight.length-1].squirted,
+                value: squirted,
                 max:   Object.keys(other).reduce((acc, key)=>{
-                    return Math.max(acc, (other[key].weight[other[key].weight.length-1]).squirted)
-                }, weight[weight.length-1].squirted),
+                    const _weight = (other[key].weight || [])
+                    return _weight.length > 0 ? Math.max(acc,_weight[_weight.length-1].squirted) : acc;
+                }, squirted),
                 average: Object.keys(other).reduce((acc, key)=>{
-                    return acc + (other[key].weight[other[key].weight.length-1]).squirted
+                    const _weight = (other[key].weight || [])
+                    return acc + (_weight.length > 0 ? _weight[_weight.length-1].squirted : 0);
                 }, 0) / Object.keys(other).length,
                 labelfn: (value)=>`${(value).toFixed(1)} g`
             },
             used:{
                 value: weight.length,
                 max: Object.keys(other).reduce((acc, key)=>{
-                            return Math.max(acc, other[key].weight.length)
+                            return Math.max(acc, (other[key].weight ||[]).length)
                 },weight.length),
                 average: Object.keys(other).reduce((acc, key)=>{
-                    return acc + other[key].weight.length
+                    return acc + (other[key].weight ||[]).length
                 },0) / Object.keys(other).length,
                 labelfn: (value)=>`${value.toFixed(0)} times`
             }

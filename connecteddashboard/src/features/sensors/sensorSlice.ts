@@ -401,6 +401,10 @@ export const selectActivities = (state:AppState)=>{
     return state.sensors.data.activities;
 }
 
+export const selectActivity = (state:AppState)=>{
+  return state.sensors.activity;
+}
+
 export const selectSpongeData = (state: AppState)   => {
    const {data:{sponge}} = state.sensors;
    return sponge.length > 0 ? sponge[sponge.length -1] : {};
