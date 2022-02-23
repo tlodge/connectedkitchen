@@ -22,9 +22,9 @@ function LiquidChart({weight, used}){
 
     const uresultfn = ()=>{
         if (uaverage < uvalue){
-            return `${ulabelfn(uvalue-uaverage)} times less`;
+            return `${ulabelfn(uvalue-uaverage)} less`;
         }else{
-            return `${wlabelfn(uaverage-uvalue)} times more`
+            return `${ulabelfn(uaverage-uvalue)} more`
         }
     }
 

@@ -5,7 +5,7 @@ import {useEffect, memo} from 'react';
 const Liquid= memo(function Liquid(props) {
 
     useEffect(()=>{
-        console.log("liquid chanegd!!!")
+        console.log("liquid chanegd!!!", props.data)
     }, [props.data])
 
     const renderLiquid = (root, data)=>{  

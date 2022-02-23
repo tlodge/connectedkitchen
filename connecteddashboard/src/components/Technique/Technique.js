@@ -5,8 +5,8 @@ import {memo} from 'react';
 
 function Technique(props) {
     
-    const  colour = d3.scaleSequential(d3.interpolateRdYlBu).domain([500,0]);
-    const  pressurescale = d3.scaleLinear().domain([0, 500]).range([0,1.0]);  
+    const  colour = d3.scaleSequential(d3.interpolateRdYlBu).domain([180,100]);
+    const  pressurescale = d3.scaleLinear().domain([100, 180]).range([0,1.0]);  
 
     const renderTechnique =(root, data)=>{
 
@@ -36,7 +36,10 @@ function Technique(props) {
         })
         dishmatic.append("path").attr("id","handlebottom").attr("d","M298.269,61.064C298.269,59.781 297.227,58.739 295.944,58.739L239.494,58.739C238.157,58.739 237.071,59.825 237.071,61.163L237.071,62.451L298.269,62.451L298.269,61.064Z" ).attr("class", "handlebottom")
         dishmatic.append("path").attr("id","handle").attr("d","M354.496,0.514L354.496,5.838C343.936,9.43 309.655,27.714 299.032,46.022C296.864,49.759 297.194,59.133 297.194,59.133L238.268,59.35C240.718,46.628 267.419,38.847 286.622,26.745C298.325,19.37 309.604,9.643 321.217,0.514L354.496,0.514Z").attr("class", "handle")
-        tech.select("path#spongebottom").style("fill", d=>colour(Math.max(0,d.pressure)))
+        tech.select("path#spongebottom").style("fill", d=>{
+           
+            return   colour(Math.max(0,d.pressure))
+        });
 
         const yaccsponge = techg.append("g").attr("id","yaccsponge").attr("transform", d=>`translate(${xacc(d.accx)},${0})`)
         yaccsponge.append("path").attr("id","yaccspongetop").attr("d","M205.654,96.097L190.028,96.097L190.028,91.303C190.028,90.421 190.744,89.705 191.626,89.705L204.38,89.705C205.083,89.705 205.654,90.275 205.654,90.978L205.654,96.097Z"  ).attr("class", "yaccspongetop")

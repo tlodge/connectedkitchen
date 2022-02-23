@@ -5,8 +5,8 @@ import {loadState,saveState} from '../../utils/localStorage'
 
 const UART_RX_CHARACTERISTIC_UUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
 let rxCharacteristic;
-const BASELINE = 260;
-const BASEREADING = 17032;
+let BASELINE = 700;
+let BASEREADING = 17053;
 const MILLILITRESPERSECOND = 10.8;
 let recordTimer;
 
@@ -62,6 +62,16 @@ export const sensorSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {    
+
+    fixWeight : (state, action:PayloadAction<any>)=>{
+      const data = loadState("connected one");
+      const _data = {...data, weight: [{ts:1644248531409, squirted:2}]}
+      saveState("connected one", _data);
+
+      const d2 = loadState("connected two");
+      const _d2 = {...d2, weight: [{ts: 1644249172545, squirted:3}]}
+      saveState("connected two", _d2);
+    },
     setData: (state, action:PayloadAction<any>)=>{
         //append the latest data item to its type
         
@@ -124,7 +134,7 @@ export const sensorSlice = createSlice({
         }
     },
     deleteArchive:  (state, action:PayloadAction<Status>)=>{
-        console.log("in del arhive");
+        console.log("in del archive");
         const recordings = loadState("recordings");
         console.log("recordings", recordings);
         const deleted = loadState("deleted") || [];
@@ -143,7 +153,7 @@ export const sensorSlice = createSlice({
     }
   }
 })
-export const { setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName, setActivity, deleteArchive } = sensorSlice.actions;
+export const { fixWeight,setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName, setActivity, deleteArchive } = sensorSlice.actions;
 
 export const handleFlow = (device,service): AppThunk => (dispatch, getState) => {
 
@@ -197,9 +207,27 @@ export const handleFlow = (device,service): AppThunk => (dispatch, getState) => 
     }
   }
 
+const calculatebasereading = (calibrations)=>{
+    
+   
+
+    const frequencies = calibrations.reduce((acc,item)=>{
+        acc[item] = (acc[item]|| 0)+1;
+        return acc;
+    },{});
+
+   
+    const maxkey = Object.keys(frequencies).reduce((acc,key)=>{
+       return acc < frequencies[key] ? key : acc;
+    },0);
+
+   
+    return Number(maxkey)
+}
+
 export const handleWeight = (device, service): AppThunk => (dispatch, getState) => {
     
-    const THRESHOLD = 2;
+    const THRESHOLD = 1;
     const lasttwo = [0,0];
     let index = 0;
     let lastreading = 0;
@@ -215,7 +243,8 @@ export const handleWeight = (device, service): AppThunk => (dispatch, getState) 
         UART_RX_CHARACTERISTIC_UUID
       ).then((characteristic)=>{
 
-       
+        let calibrationcount = 0;
+        let calibrationreadings = [];
 
         return characteristic.startNotifications().then(char => {
           dispatch(setBluetoothStatus({'weight':true}));
@@ -224,10 +253,11 @@ export const handleWeight = (device, service): AppThunk => (dispatch, getState) 
 
 
                   const data = event.target.value;
+                 
                   const arr = new Uint8Array(data.buffer);
                   var string = new TextDecoder().decode(arr);
                  
-
+                  
                   if (string.startsWith("-")){
                     const toks = string.split(",");
                    
@@ -236,17 +266,28 @@ export const handleWeight = (device, service): AppThunk => (dispatch, getState) 
                     //get rid of truncated values!
                     if (number.length >= 5){
                       const rawweight = Number(number.join(""))
+                      if (calibrationcount < 5){
+                        calibrationreadings[calibrationcount++] = rawweight;
+                      }
+                      if (calibrationcount == 5){
+                        BASEREADING = calculatebasereading(calibrationreadings);
+                        calibrationcount+=1;
+                      }
                       const weight = rawweight-BASEREADING;
+                     
                       lasttwo[++index%2]= weight;
                       
                       //omly update weight if last two readings tally
                       if (lasttwo[0]==lasttwo[1] && lastreading != weight){
                         lastreading = weight;
-                        
+                       
                         if (weight > THRESHOLD){
-                          if (lastthresholdreading > 0 && lastthresholdreading-weight > THRESHOLD){
+                         
+                          if (lastthresholdreading > 0 && lastthresholdreading-weight >= THRESHOLD){
                             totalsquirted += Math.max(0, lastthresholdreading-weight);
+                            
                            
+                            console.log("set squirted to", totalsquirted);
                             dispatch(setData({
                                 type:"weight",
                                 data:{
@@ -261,6 +302,11 @@ export const handleWeight = (device, service): AppThunk => (dispatch, getState) 
                         }
                         
                       }
+                      
+                      //else{
+                      //  lastreading = weight;
+                        
+                     // }
                     }
                   }
                  
@@ -276,7 +322,8 @@ export const handleSponge = (device,service): AppThunk => (dispatch, getState) =
     device.addEventListener('gattserverdisconnected', ()=>{
       dispatch(setBluetoothStatus({'sponge':false}));
     });
-
+    let calibrationcount = 0;
+    let calibrationreadings = [];
     try{
         rxCharacteristic =  service.getCharacteristic(
           UART_RX_CHARACTERISTIC_UUID
@@ -290,15 +337,24 @@ export const handleSponge = (device,service): AppThunk => (dispatch, getState) =
                       const dv = event.target.value;
                       const arr = new Uint8Array(dv.buffer)
                       var string = new TextDecoder().decode(arr);
-                     
+                    
                       const toks = string.split(" ");
                       const [xa, ya, za, xg, yg, zg, pressure, temperature, mic] = toks;
+                      
+                      if (calibrationcount < 5){
+                        calibrationreadings[calibrationcount++] = pressure;
+                      }
+                      if (calibrationcount == 5){
+                        BASELINE = calculatebasereading(calibrationreadings);
+                        calibrationcount+=1;
+                      }
                       
                       dispatch(setData({
                           type:"sponge",
                           data:{
                             ts, 
-                            pressure: Number(pressure)-BASELINE, 
+                            baseline: BASELINE,
+                            pressure: BASELINE-Number(pressure), 
                             temperature:Number(temperature), 
                             acceleration:[Number(xa),Number(ya),Number(za)], 
                             gyro:[Number(xg), Number(yg), Number(zg)], 

@@ -35,13 +35,15 @@ function Longitudinal({data,other}){
     const timedata = ()=>{
         const {time={}} = data;
         const {from=0, to=0} = time;
+
+       
         return {
             value: to-from,
             max: Object.keys(other).reduce((acc, key)=>{
                 return Math.max(acc, (other[key].time.to - other[key].time.from));
             },to-from),
             average: Object.keys(other).reduce((acc, key)=>{
-                return other[key].time.to - other[key].time.from;
+                return acc + (other[key].time.to - other[key].time.from);
             },0) / Object.keys(other).length,
             labelfn : timelabelfn,
         }
@@ -49,19 +51,23 @@ function Longitudinal({data,other}){
 
     const waterdata = ()=>{
         const {water=[]} = data;
+        const fill = (water[water.length-1]||{}).fill || 0
         return {
-            value: water[water.length-1].fill,
+            value: fill,
             max:   Object.keys(other).reduce((acc, key)=>{
-                return Math.max(acc, (other[key].water[other[key].water.length-1]).fill)
-            }, water[water.length-1].fill),
+                const _fill = ((other[key].water[other[key].water.length-1]) || {}).fill || 0;
+                return Math.max(acc, _fill);
+            }, fill),
             average: Object.keys(other).reduce((acc, key)=>{
-                return acc + (other[key].water[other[key].water.length-1]).fill
+                const _fill = ((other[key].water[other[key].water.length-1]) || {}).fill || 0;
+                return acc + _fill
             }, 0) / Object.keys(other).length,
             labelfn: (value)=>`${(value/1000).toFixed(1)} litres`
         }
     }
 
     const liquiddata = ()=>{
+
         const {weight=[]} = data;
         const squirted = weight.length > 0 ? weight[weight.length-1].squirted : 0;
         return{
@@ -127,7 +133,7 @@ function Longitudinal({data,other}){
                 return acc;
             },0);
         }
-
+        
         return{
             value: calctotal(activities[type]),
             max: Object.keys(other).reduce((acc, key)=>{
@@ -135,7 +141,7 @@ function Longitudinal({data,other}){
             },calctotal(activities[type])),
             average:  Object.keys(other).reduce((acc, key)=>{
                 return acc + calctotal((other[key].activities || {})[type])
-            },calctotal(activities[type])),
+            },0) / Object.keys(other).length,
             labelfn: timelabelfn,
         }
     }
