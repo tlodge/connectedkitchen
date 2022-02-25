@@ -62,7 +62,10 @@ export const sensorSlice = createSlice({
   initialState,
   // The `reducers` field lets us define reducers and generate associated actions
   reducers: {    
-
+    reAdd : (state, action:PayloadAction<any>)=>{
+      const recordings = loadState("recordings");
+      saveState("recordings", [...recordings, action.payload]);
+    },
     fixWeight : (state, action:PayloadAction<any>)=>{
       const data = loadState("connected one");
       const _data = {...data, weight: [{ts:1644248531409, squirted:2}]}
@@ -153,7 +156,7 @@ export const sensorSlice = createSlice({
     }
   }
 })
-export const { fixWeight,setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName, setActivity, deleteArchive } = sensorSlice.actions;
+export const { fixWeight, reAdd, setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName, setActivity, deleteArchive } = sensorSlice.actions;
 
 export const handleFlow = (device,service): AppThunk => (dispatch, getState) => {
 

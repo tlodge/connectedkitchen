@@ -14,17 +14,17 @@ function LiquidChart({weight, used}){
 
     const wresultfn = ()=>{
         if (waverage < wvalue){
-            return `${wlabelfn(wvalue-waverage)} grams less`;
+            return `${wlabelfn(wvalue-waverage)} grams more`;
         }else{
-            return `${wlabelfn(waverage-wvalue)} grams more`
+            return `${wlabelfn(waverage-wvalue)} grams less`
         }
     }
 
     const uresultfn = ()=>{
         if (uaverage < uvalue){
-            return `${ulabelfn(uvalue-uaverage)} less`;
+            return `${ulabelfn(uvalue-uaverage)} more`;
         }else{
-            return `${ulabelfn(uaverage-uvalue)} more`
+            return `${ulabelfn(uaverage-uvalue)} less`
         }
     }
 

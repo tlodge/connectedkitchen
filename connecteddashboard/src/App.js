@@ -19,6 +19,7 @@ import {
   stoprecording,
   deleteArchive,
   fixWeight,
+  reAdd,
 } from './features/sensors/sensorSlice'
 
 
@@ -192,7 +193,7 @@ function App() {
               <div className="expheading">recorded experiments</div>
               {!recording && renderExperiments()}
             </div>
-           {/* <button className="button" onClick={()=>dispatch(fixWeight())}>fix weight!</button>*/}
+           {/*<button className="button" onClick={()=>dispatch(reAdd({ts:1645782662394, name:"participant 4"}))}>fix experments</button>}*/}
           </>
   }
   
