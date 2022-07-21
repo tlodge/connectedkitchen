@@ -6,6 +6,12 @@ This code was written for a year-long agile Horizon project, exploring the poten
 
 ## The live dashboard
 The live dashboard uses react and d3 to visualise data from three bits of hardware: a smart sponge (a dishmatic sponge with an <a href="http://adafru.it/4516">Adafruit Bluefruit Sense Feather</a>, some bluetooth enabled weighing scales and a water flow monitor.
+<p>
+  <img src="live.png" alt="live dashboard" width="800px"/>
+</p>
 
 ## The longitudinal dashboard
 The longitundinal dashboard presents aggregate data against participants' average.  All data is stored in-browser (I do all I can not to rely on any backends if I can..)  
+<p>
+  <img src="longitudinal.png" alt="live dashboard" width="800px"/>
+</p>
