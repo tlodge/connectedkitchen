@@ -30,7 +30,7 @@ import {
 import {useAppDispatch } from './hooks/useRedux'
 import { Longitudinal } from "./components/Longitudinal";
 import {Live} from './components/Live'
-
+import { Replay } from "./components/Replay";
 const UART_SERVICE_UUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
 
 function App() {
@@ -68,6 +68,9 @@ function App() {
     const {pathname} = window.location || "";
     if (pathname.trim() === "/live"){
       setScreen("live");
+    }
+    if (pathname.trim() === "/replay"){
+      setScreen("replay");
     }
     dispatch(init());
   },[window]);
@@ -197,6 +200,10 @@ function App() {
           </>
   }
   
+  const renderReplay = ()=>{
+    return <Replay data={"participant1"}/>
+  }
+
   const renderLive = ()=>{
     return <Live name={experimentName}/>
   }
@@ -209,6 +216,7 @@ function App() {
       {screen==="menu" && renderMenu()}
       {screen==="live" && renderLive()}
       {screen==="long" && renderLongitudinal()}
+      {screen==="replay" && renderReplay()}
       {recording && renderWoz()}
   </>);
 }

@@ -5,8 +5,8 @@ import {memo} from 'react';
 
 function Technique(props) {
     
-    const  colour = d3.scaleSequential(d3.interpolateRdYlBu).domain([180,100]);
-    const  pressurescale = d3.scaleLinear().domain([100, 180]).range([0,1.0]);  
+    const  colour = d3.scaleSequential(d3.interpolateRdYlBu).domain([-92,-3]);
+    const  pressurescale = d3.scaleLinear().domain([-3, -92]).range([0,1.0]);  
 
     const renderTechnique =(root, data)=>{
 
@@ -31,14 +31,13 @@ function Technique(props) {
         const dishmatic = techg.append("g").attr("id","dishmatic")
         dishmatic.append("path").attr("id","spongetop").attr("d","M302.811,79.838L230.854,79.838L230.854,66.77C230.854,64.365 232.806,62.414 235.21,62.414L299.339,62.414C301.256,62.414 302.811,63.969 302.811,65.886L302.811,79.838Z" ).attr("class", "spongetop")
         dishmatic.append("path").attr("id","spongebottom").attr("d","M230.854,79.838L302.811,79.838L302.811,80.886C302.811,83.519 300.674,85.656 298.041,85.656L235.615,85.656C232.987,85.656 230.854,83.523 230.854,80.896L230.854,79.838Z" ).attr("class", "spongebottom").style("fill", d=>{
-            console.log("have d", d);
-            return  colour(Math.max(0,d.pressure))
+            return  colour(d.pressure)
         })
         dishmatic.append("path").attr("id","handlebottom").attr("d","M298.269,61.064C298.269,59.781 297.227,58.739 295.944,58.739L239.494,58.739C238.157,58.739 237.071,59.825 237.071,61.163L237.071,62.451L298.269,62.451L298.269,61.064Z" ).attr("class", "handlebottom")
         dishmatic.append("path").attr("id","handle").attr("d","M354.496,0.514L354.496,5.838C343.936,9.43 309.655,27.714 299.032,46.022C296.864,49.759 297.194,59.133 297.194,59.133L238.268,59.35C240.718,46.628 267.419,38.847 286.622,26.745C298.325,19.37 309.604,9.643 321.217,0.514L354.496,0.514Z").attr("class", "handle")
         tech.select("path#spongebottom").style("fill", d=>{
            
-            return   colour(Math.max(0,d.pressure))
+            return   colour(d.pressure)
         });
 
         const yaccsponge = techg.append("g").attr("id","yaccsponge").attr("transform", d=>`translate(${xacc(d.accx)},${0})`)

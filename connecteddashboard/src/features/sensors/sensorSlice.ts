@@ -159,7 +159,7 @@ export const sensorSlice = createSlice({
 export const { fixWeight, reAdd, setData, setRecording, stopRecording, setArchive, setBluetoothStatus, setExperimentName, setActivity, deleteArchive } = sensorSlice.actions;
 
 export const handleFlow = (device,service): AppThunk => (dispatch, getState) => {
-
+ 
     let fill = 0;
     let previous = 0;
 
