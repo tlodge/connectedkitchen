@@ -15,3 +15,8 @@ The longitundinal dashboard presents aggregate data against participants' averag
 <p>
   <img src="longitudinal.png" alt="live dashboard" width="800px"/>
 </p>
+
+## Structure of the code
+
+The feather microcontroller code for the sponge, flow monitor and weighing scales is in the feather directory.  
+The dashboards are in the connecteddashboard directory. The create react app template was used to create them.  It uses redux for state management.  Hopefully reasonably self-explanatory.
